@@ -83,19 +83,21 @@ export function attendance(v: number, r: { from: number; to: number; prevFrom: n
     const cur = sessionsIn(v, r.from, r.to)
     const prev = sessionsIn(v, r.prevFrom, r.prevFrom + (r.to - r.from))
     const buckets = new Map<number, Bucket>()
+    // Hours are counted from local midnight; epoch-based modulo would be off by
+    // the half-hour in IST.
+    const slot = (ts: number) => (r.bucket === 'hour' ? ts - ((ts - r.from) % HOUR) : dayStart(ts))
     let start = r.from
     let end = r.to
     if (r.bucket === 'hour') {
       start = r.from + MUSEUM.opensAt * HOUR
       end = Math.max(r.from + MUSEUM.closesAt * HOUR, r.to)
-      for (const s of cur) start = Math.min(start, s.startedAt - (s.startedAt % HOUR))
+      for (const s of cur) start = Math.min(start, slot(s.startedAt))
     }
     for (let t = start; t < end; t += size) {
       // A closed Monday is not a day nobody came; leave it out rather than plot a zero.
       if (r.bucket === 'day' && new Date(t + 2 * HOUR).getDay() === MUSEUM.closedDay) continue
       buckets.set(t, { t, visitors: 0, queries: 0, prevVisitors: 0 })
     }
-    const slot = (ts: number) => (r.bucket === 'hour' ? ts - ((ts - r.from) % HOUR) : dayStart(ts))
     for (const s of cur) {
       const b = buckets.get(slot(s.startedAt))
       if (b) b.visitors++
