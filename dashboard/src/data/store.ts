@@ -168,6 +168,7 @@ function pushFeed(e: Omit<FeedEvent, 'id'>) {
 }
 
 export function getFeed() {
+  if (!feed.length) primeFeed()
   return feed
 }
 
@@ -187,8 +188,6 @@ function primeFeed() {
   events.sort((a, b) => a.at - b.at)
   events.slice(-14).forEach(pushFeed)
 }
-
-primeFeed()
 
 const liveRng = makeRng(Date.now() % 2147483647)
 let liveTimer: ReturnType<typeof setTimeout> | null = null
@@ -319,6 +318,8 @@ export function setLive(on: boolean) {
   liveOn = on
   if (on) {
     ensureVisitors()
+    feed = []
+    primeFeed()
     schedule()
   } else if (liveTimer) {
     clearTimeout(liveTimer)

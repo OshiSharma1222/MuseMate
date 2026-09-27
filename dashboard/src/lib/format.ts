@@ -34,11 +34,15 @@ export function fmtMin(min: number) {
 export const fmtTime = (ts: number) =>
   new Date(ts).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
 
-export const fmtDate = (ts: number) =>
-  new Date(ts).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-export const fmtDateShort = (ts: number) =>
-  new Date(ts).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+export function fmtDateShort(ts: number) {
+  const d = new Date(ts)
+  return `${d.getDate()} ${MONTHS[d.getMonth()]}`
+}
+
+export const fmtDate = (ts: number) => `${DAYS[new Date(ts).getDay()]} ${fmtDateShort(ts)}`
 
 export const fmtDateTime = (ts: number) => `${fmtDate(ts)}, ${fmtTime(ts)}`
 
