@@ -7,7 +7,7 @@ export function cx(...parts: (string | false | null | undefined)[]) {
 }
 
 export function Card({ className, children }: { className?: string; children: ReactNode }) {
-  return <section className={cx('rounded-xl border border-line bg-surface shadow-card', className)}>{children}</section>
+  return <section className={cx('min-w-0 rounded-xl border border-line bg-surface shadow-card', className)}>{children}</section>
 }
 
 export function CardHeader({
@@ -22,7 +22,7 @@ export function CardHeader({
   className?: string
 }) {
   return (
-    <header className={cx('flex items-start justify-between gap-4 px-5 pt-4 pb-3', className)}>
+    <header className={cx('flex flex-wrap items-start justify-between gap-x-4 gap-y-2 px-5 pt-4 pb-3', className)}>
       <div className="min-w-0">
         <h2 className="text-[14px] font-semibold text-ink">{title}</h2>
         {subtitle && <p className="mt-0.5 text-[13px] text-ink-3">{subtitle}</p>}
@@ -185,7 +185,7 @@ export function Segmented<T extends string>({
   label?: string
 }) {
   return (
-    <div role="radiogroup" aria-label={label} className="inline-flex rounded-lg bg-surface-3 p-0.5">
+    <div role="radiogroup" aria-label={label} className="inline-flex max-w-full overflow-x-auto rounded-lg bg-surface-3 p-0.5 scroll-thin">
       {options.map((o) => {
         const on = o.value === value
         return (
@@ -195,7 +195,7 @@ export function Segmented<T extends string>({
             aria-checked={on}
             onClick={() => onChange(o.value)}
             className={cx(
-              'rounded-[7px] font-medium whitespace-nowrap transition-colors',
+              'shrink-0 rounded-[7px] font-medium whitespace-nowrap transition-colors',
               size === 'sm' ? 'h-6 px-2 text-[12px]' : 'h-8 px-3 text-[13px]',
               on ? 'bg-surface text-ink shadow-[0_1px_2px_rgb(0_0_0/0.08)]' : 'text-ink-2 hover:text-ink',
             )}

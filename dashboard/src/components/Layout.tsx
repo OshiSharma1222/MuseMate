@@ -262,7 +262,7 @@ export function Layout({ children }: { children?: ReactNode }) {
             >
               <Menu size={20} />
             </button>
-            <div className="lg:hidden">
+            <div className="hidden sm:block lg:hidden">
               <Brand />
             </div>
             <div className="ml-auto flex items-center gap-2">
