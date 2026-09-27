@@ -231,7 +231,7 @@ export function Layout({ children }: { children?: ReactNode }) {
   }, [location.pathname])
 
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-[248px_1fr]">
+    <div className="min-h-screen lg:grid lg:grid-cols-[248px_1fr] print:block">
       <aside className="no-print sticky top-0 hidden h-screen border-r border-line lg:block">
         <Sidebar />
       </aside>
@@ -273,7 +273,7 @@ export function Layout({ children }: { children?: ReactNode }) {
             </div>
           </div>
         </header>
-        <main className="mx-auto max-w-[1320px] px-4 py-7 sm:px-6 lg:px-8 lg:py-9">{children ?? <Outlet />}</main>
+        <main className="mx-auto max-w-[1320px] px-4 py-7 sm:px-6 lg:px-8 lg:py-9 print:max-w-none print:p-0">{children ?? <Outlet />}</main>
       </div>
     </div>
   )
