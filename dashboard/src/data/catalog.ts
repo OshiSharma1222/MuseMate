@@ -7,7 +7,8 @@ export const MUSEUM = {
   closesAt: 18,
   /** 1 = Monday, as returned by Date#getDay. Most Indian state museums close on Mondays. */
   closedDay: 1,
-  devices: 32,
+  /** Enough handhelds for a Sunday peak of about 70 visitors inside. */
+  devices: 80,
 }
 
 /** Galleries in the order the floor plan walks a visitor through them. */

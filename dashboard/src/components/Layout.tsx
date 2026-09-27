@@ -20,7 +20,7 @@ import { painPoints } from '../data/selectors'
 import { getActiveCount, getResolved, isLive, setLive, useVersion } from '../data/store'
 import { RANGE_OPTIONS, useRange, type RangeKey } from '../lib/range'
 import { useTheme, type ThemePref } from '../lib/theme'
-import { Segmented, cx } from './ui'
+import { Meter, Segmented, cx } from './ui'
 
 interface NavItem {
   to: string
@@ -145,10 +145,8 @@ function ServerStatus() {
           {inUse} / {MUSEUM.devices}
         </span>
       </div>
-      <div className="mt-1.5 flex gap-[2px]">
-        {Array.from({ length: MUSEUM.devices }, (_, i) => (
-          <span key={i} className={cx('h-1.5 flex-1 rounded-[1px]', i < inUse ? 'bg-s1' : 'bg-surface-3')} />
-        ))}
+      <div className="mt-1.5">
+        <Meter value={inUse} max={MUSEUM.devices} />
       </div>
       <div className="mt-2 text-[11.5px] text-ink-3">museum LAN · no internet needed</div>
     </div>
