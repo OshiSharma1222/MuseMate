@@ -52,8 +52,16 @@ export default function Overview() {
             )
           ) : (
             <>
-              {fmtInt(cur.visitors)} visitors tapped artifacts {fmtInt(cur.taps)} times and asked {fmtInt(cur.queries)}{' '}
-              questions in {langs.length} languages. The guide answered {fmtPct(1 - cur.unansweredRate)} of them.
+              {fmtInt(cur.visitors)} {cur.visitors === 1 ? 'visitor' : 'visitors'} tapped artifacts {fmtInt(cur.taps)} times
+              {cur.queries ? (
+                <>
+                  {' '}
+                  and asked {fmtInt(cur.queries)} questions in {langs.length} languages. The guide answered{' '}
+                  {fmtPct(1 - cur.unansweredRate)} of them.
+                </>
+              ) : (
+                <>, listening in {langs.length} languages. No questions yet.</>
+              )}
             </>
           )
         }
@@ -68,7 +76,7 @@ export default function Overview() {
           />
           <Stat
             label="Average visit"
-            value={fmtMin(cur.avgDurationMin)}
+            value={cur.avgDurationMin ? fmtMin(cur.avgDurationMin) : '–'}
             delta={<Delta value={change(cur.avgDurationMin, prev.avgDurationMin)} />}
             foot={<span>{fmt1(cur.artifactsPerVisitor)} artifacts each</span>}
           />
