@@ -153,8 +153,9 @@
   html {
     background: var(--page);
   }
+  /* The page colour lives on html only, so the gallery backdrop can sit
+     between it and the app. */
   body {
-    background: var(--page);
     color: var(--ink);
     font-family: var(--font-sans);
     font-size: 14px;
@@ -232,9 +233,70 @@
   animation: slide-in 320ms ease-out;
 }
 
+/*
+  Scenery. Gallery photos sit behind the app and in page banners, drifting
+  slowly. The motion stops for prefers-reduced-motion.
+*/
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.99);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1.02) translate(0, 0);
+  }
+  to {
+    transform: scale(1.14) translate(-1.5%, -1%);
+  }
+}
+
+.backdrop-photo {
+  filter: blur(5px) saturate(1.15);
+  transform: scale(1.08);
+  animation: fade-in 1.2s ease-out backwards;
+}
+
+.backdrop-veil {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--page) 70%, transparent), transparent 22%),
+    linear-gradient(180deg, color-mix(in srgb, var(--page) 58%, transparent), color-mix(in srgb, var(--page) 84%, transparent) 45%, color-mix(in srgb, var(--page) 90%, transparent));
+}
+
+.banner {
+  isolation: isolate;
+  animation: fade-in 0.7s ease-out backwards;
+}
+
+.banner-shade {
+  background:
+    linear-gradient(90deg, rgb(20 16 11 / 0.62), rgb(20 16 11 / 0.1) 75%),
+    linear-gradient(0deg, rgb(20 16 11 / 0.82), rgb(20 16 11 / 0.2) 60%, rgb(20 16 11 / 0.3));
+}
+
+.banner-text {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s backwards;
+}
+
+.kenburns {
+  animation: ken-burns 22s ease-in-out infinite alternate;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .live-dot::after,
-  .feed-enter {
+  .feed-enter,
+  .backdrop-photo,
+  .banner,
+  .banner-text,
+  .kenburns {
     animation: none;
   }
 }

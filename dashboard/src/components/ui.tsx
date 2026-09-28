@@ -1,6 +1,7 @@
 import { ArrowDownRight, ArrowUpRight, Minus, Search } from 'lucide-react'
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react'
 import { fmtPct } from '../lib/format'
+import { PageBanner } from './scenery'
 
 export function cx(...parts: (string | false | null | undefined)[]) {
   return parts.filter(Boolean).join(' ')
@@ -32,28 +33,8 @@ export function CardHeader({
   )
 }
 
-export function PageHeader({
-  eyebrow,
-  title,
-  description,
-  actions,
-}: {
-  eyebrow?: ReactNode
-  title: ReactNode
-  description?: ReactNode
-  actions?: ReactNode
-}) {
-  return (
-    <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-      <div className="min-w-0">
-        {eyebrow && <div className="eyebrow mb-2">{eyebrow}</div>}
-        <h1 className="font-serif text-[40px] leading-[1.05] tracking-[-0.01em] text-ink">{title}</h1>
-        {description && <p className="mt-2 max-w-2xl text-[14px] text-ink-2">{description}</p>}
-      </div>
-      {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
-    </div>
-  )
-}
+/** Every page opens on a photo of its gallery. */
+export const PageHeader = PageBanner
 
 /**
  * Change against the comparison period. `goodWhen` says which direction is

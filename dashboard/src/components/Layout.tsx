@@ -20,6 +20,7 @@ import { painPoints } from '../data/selectors'
 import { getActiveCount, getResolved, isLive, setLive, useVersion } from '../data/store'
 import { RANGE_OPTIONS, useRange, type RangeKey } from '../lib/range'
 import { useTheme, type ThemePref } from '../lib/theme'
+import { Backdrop } from './scenery'
 import { Meter, Segmented, cx } from './ui'
 
 interface NavItem {
@@ -232,6 +233,7 @@ export function Layout({ children }: { children?: ReactNode }) {
 
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[248px_1fr] print:block">
+      <Backdrop />
       <aside className="no-print sticky top-0 hidden h-screen border-r border-line lg:block">
         <Sidebar />
       </aside>
