@@ -2,18 +2,34 @@ import { Download, FileSpreadsheet, Star } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { SortTh, useSort } from '../components/table'
-import { Badge, Button, Card, Empty, LangTag, Mono, PageHeader, ScrollX, SearchInput, Select, Td, Toggle, cx } from '../components/ui'
+import { Button, Card, Empty, Mono, PageHeader, ScrollArea, SearchInput, Select, Td, Toggle } from '../components/ui'
 import { LANGS, LANG_NAME, MODES, MODE_NAME } from '../data/catalog'
 import { exportQueries, exportVisitors } from '../data/exports'
 import { durationMin, queriesOf, sessionsIn } from '../data/selectors'
 import type { Lang, Mode, Session } from '../data/types'
+import { dayStart } from '../data/seed'
 import { useVersion } from '../data/store'
-import { fmtDate, fmtInt, fmtMin, fmtTime } from '../lib/format'
+import { fmtDate, fmtDateShort, fmtInt, fmtMin, fmtTime } from '../lib/format'
 import { useRange } from '../lib/range'
 
-type SortKey = 'started' | 'duration' | 'artifacts' | 'questions' | 'unanswered' | 'rating'
+type SortKey = 'started' | 'duration' | 'artifacts' | 'questions' | 'rating'
 
 const PAGE = 60
+/** Day containers shown before "Show earlier days". */
+const DAY_PAGE = 7
+
+const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+/** "Today", "Yesterday" or the weekday, for the register's day headings. */
+function dayName(day: number) {
+  const today = dayStart(Date.now())
+  if (day === today) return 'Today'
+  if (day === dayStart(today - 1)) return 'Yesterday'
+  return WEEKDAYS[new Date(day).getDay()]
+}
+
+/** A blank that still reads as "none" in a column of figures. */
+const Nil = () => <span className="text-line-strong">—</span>
 
 const GROUP_LABEL: Record<Session['group'], string> = {
   solo: 'Individual',
@@ -38,15 +54,112 @@ export function Stars({ rating }: { rating: number | null }) {
   )
 }
 
+type Sorter = ReturnType<typeof useSort<SortKey>>
+
+const TH = 'sticky top-0 z-[1] border-b border-line-strong bg-surface px-3 text-left col-label'
+
+function VisitTable({ rows, sort, withDate }: { rows: Session[]; sort: Sorter; withDate: boolean }) {
+  const navigate = useNavigate()
+  return (
+    <table className="w-full min-w-[960px] table-fixed border-collapse text-[13.5px]">
+      {/* Fixed widths keep the columns lined up from one day to the next. */}
+      <colgroup>
+        <col className="w-[108px]" />
+        <col className="w-[180px]" />
+        <col className="w-[120px]" />
+        <col />
+        <col className="w-[110px]" />
+        <col className="w-[80px]" />
+        <col className="w-[170px]" />
+        <col className="w-[112px]" />
+      </colgroup>
+      <thead>
+        <tr>
+          <SortTh k="started" sort={sort}>
+            Time
+          </SortTh>
+          <th className={TH}>Visit</th>
+          <th className={TH}>Party</th>
+          <th className={TH}>Language</th>
+          <SortTh k="duration" sort={sort} align="right">
+            Inside for
+          </SortTh>
+          <SortTh k="artifacts" sort={sort} align="right">
+            Stops
+          </SortTh>
+          <SortTh k="questions" sort={sort} align="right">
+            Questions
+          </SortTh>
+          <SortTh k="rating" sort={sort}>
+            Rating
+          </SortTh>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((s) => {
+          const qs = queriesOf(s)
+          const un = qs.filter((x) => x.status === 'unanswered').length
+          return (
+            <tr key={s.id} onClick={() => navigate(`/visitors/${s.id}`)} className="cursor-pointer hover:bg-surface-2">
+              <Td className="whitespace-nowrap text-ink-2 tnum">
+                {withDate ? `${fmtDateShort(s.startedAt)}, ${fmtTime(s.startedAt)}` : fmtTime(s.startedAt)}
+              </Td>
+              <Td className="whitespace-nowrap">
+                <Mono className="font-medium text-ink">{s.id}</Mono>
+                <Mono className="ml-2 text-[11.5px] text-ink-3">{s.deviceId}</Mono>
+              </Td>
+              <Td className="whitespace-nowrap text-ink-2">{GROUP_LABEL[s.group]}</Td>
+              <Td className="truncate">
+                <span className="text-ink">{LANG_NAME[s.lang]}</span>
+                <span className="text-ink-3">, {MODE_NAME[s.mode].toLowerCase()}</span>
+              </Td>
+              <Td align="right" className="whitespace-nowrap">
+                {s.endedAt === null ? (
+                  <span className="inline-flex items-center gap-2 text-ink" title="Still inside">
+                    <span className="live-dot relative size-1.5 rounded-full bg-good text-good" />
+                    {fmtMin(durationMin(s))}
+                  </span>
+                ) : (
+                  <span className="text-ink-2">{fmtMin(durationMin(s))}</span>
+                )}
+              </Td>
+              <Td align="right">{s.stops.length || <Nil />}</Td>
+              <Td align="right" className="whitespace-nowrap">
+                {qs.length ? (
+                  <>
+                    {qs.length}
+                    {un > 0 && (
+                      <span className="text-[12px]">
+                        <span className="text-ink-3"> · </span>
+                        <span className="text-bad">{un} unanswered</span>
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <Nil />
+                )}
+              </Td>
+              <Td>{s.rating !== null && <Stars rating={s.rating} />}</Td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}
+
+/** Long tables scroll inside their container, so the page keeps its shape. */
+const TABLE_HEIGHT = 'min(520px, 64vh)'
+
 export default function Visitors() {
   const v = useVersion()
   const { range } = useRange()
-  const navigate = useNavigate()
   const [q, setQ] = useState('')
   const [lang, setLang] = useState<Lang | 'all'>('all')
   const [mode, setMode] = useState<Mode | 'all'>('all')
   const [onlyGaps, setOnlyGaps] = useState(false)
   const [limit, setLimit] = useState(PAGE)
+  const [dayLimit, setDayLimit] = useState(DAY_PAGE)
   const sort = useSort<SortKey>('started')
 
   const all = sessionsIn(v, range.from, range.to)
@@ -71,8 +184,6 @@ export default function Visitors() {
           return s.stops.length
         case 'questions':
           return queriesOf(s).length
-        case 'unanswered':
-          return queriesOf(s).filter((x) => x.status === 'unanswered').length
         case 'rating':
           return s.rating ?? -1
       }
@@ -81,6 +192,17 @@ export default function Visitors() {
   }, [all, q, lang, mode, onlyGaps, sort.key, sort.dir])
 
   const label = range.key
+  // Sorted by time, visits read as a register with one container per day; any other sort is one flat list.
+  const byDay = sort.key === 'started'
+  const days: { day: number; rows: Session[]; inside: number }[] = []
+  if (byDay)
+    for (const s of rows) {
+      const day = dayStart(s.startedAt)
+      let group = days[days.length - 1]
+      if (!group || group.day !== day) days.push((group = { day, rows: [], inside: 0 }))
+      group.rows.push(s)
+      if (s.endedAt === null) group.inside++
+    }
 
   return (
     <>
@@ -140,97 +262,60 @@ export default function Visitors() {
         </span>
       </div>
 
-      <Card className="overflow-hidden">
-        <ScrollX>
-          <table className="w-full min-w-[800px] border-collapse text-[13.5px]">
-            <thead>
-              <tr>
-                <th className="sticky top-0 border-b border-line bg-surface px-3 pl-5 text-left text-[11px] font-semibold tracking-[0.06em] text-ink-3 uppercase">
-                  Visit
-                </th>
-                <SortTh k="started" sort={sort}>
-                  Started
-                </SortTh>
-                <SortTh k="duration" sort={sort} align="right">
-                  Time inside
-                </SortTh>
-                <th className="sticky top-0 border-b border-line bg-surface px-3 text-left text-[11px] font-semibold tracking-[0.06em] text-ink-3 uppercase">
-                  Language · mode
-                </th>
-                <SortTh k="artifacts" sort={sort} align="right">
-                  Artifacts
-                </SortTh>
-                <SortTh k="questions" sort={sort} align="right">
-                  Questions
-                </SortTh>
-                <SortTh k="unanswered" sort={sort} align="right">
-                  No answer
-                </SortTh>
-                <SortTh k="rating" sort={sort}>
-                  Rating
-                </SortTh>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.slice(0, limit).map((s) => {
-                const qs = queriesOf(s)
-                const un = qs.filter((x) => x.status === 'unanswered').length
-                return (
-                  <tr key={s.id} onClick={() => navigate(`/visitors/${s.id}`)} className="cursor-pointer hover:bg-surface-2">
-                    <Td>
-                      <div className="flex items-center gap-2.5">
-                        <Mono className="font-medium whitespace-nowrap text-ink">{s.id}</Mono>
-                        {s.endedAt === null ? (
-                          <Badge tone="good">
-                            <span className="relative size-1.5 rounded-full bg-good text-good live-dot" />
-                            Inside
-                          </Badge>
-                        ) : null}
-                      </div>
-                      <div className="mt-0.5 text-[12px] text-ink-3">
-                        <Mono className="text-[11.5px]">{s.deviceId}</Mono> · {GROUP_LABEL[s.group]}
-                      </div>
-                    </Td>
-                    <Td>
-                      <div className="text-ink tnum">{fmtTime(s.startedAt)}</div>
-                      <div className="text-[12px] text-ink-3">{fmtDate(s.startedAt)}</div>
-                    </Td>
-                    <Td align="right">
-                      <span className={cx(s.endedAt === null && 'text-ink-3')}>{fmtMin(durationMin(s))}</span>
-                    </Td>
-                    <Td>
-                      <div className="flex items-center gap-2.5">
-                        <LangTag lang={s.lang} />
-                        <div className="leading-tight">
-                          <div className="text-ink-2">{LANG_NAME[s.lang]}</div>
-                          <div className="mt-0.5 text-[12px] text-ink-3">{MODE_NAME[s.mode]}</div>
-                        </div>
-                      </div>
-                    </Td>
-                    <Td align="right">{s.stops.length}</Td>
-                    <Td align="right">{qs.length}</Td>
-                    <Td align="right">{un ? <span className="font-medium text-bad">{un}</span> : <span className="text-ink-3">0</span>}</Td>
-                    <Td>
-                      <Stars rating={s.rating} />
-                    </Td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-          {!rows.length && <Empty title="No visits match">Clear a filter or pick a longer date range.</Empty>}
-        </ScrollX>
-        {rows.length > limit && (
-          <div className="flex items-center justify-between border-t border-line px-5 py-3 text-[12.5px] text-ink-3">
-            <span className="tnum">
-              Showing {fmtInt(limit)} of {fmtInt(rows.length)}
-            </span>
-            <Button size="sm" onClick={() => setLimit(limit + PAGE * 2)}>
-              Show more
-            </Button>
-          </div>
-        )}
-      </Card>
+      {!rows.length ? (
+        <Card>
+          <Empty title="No visits match">Clear a filter or pick a longer date range.</Empty>
+        </Card>
+      ) : byDay ? (
+        <div className="space-y-6">
+          {days.slice(0, dayLimit).map((g) => {
+            const name = dayName(g.day)
+            return (
+              <Card key={g.day} className="overflow-hidden">
+                <header className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-5 pt-4 pb-3">
+                  <h2>
+                    <span className="font-serif text-[24px] leading-none text-ink">{name}</span>
+                    <span className="ml-2.5 text-[13px] text-ink-3">{name === 'Today' || name === 'Yesterday' ? fmtDate(g.day) : fmtDateShort(g.day)}</span>
+                  </h2>
+                  <span className="text-[12.5px] text-ink-3 tnum">
+                    {fmtInt(g.rows.length)} {g.rows.length === 1 ? 'visit' : 'visits'}
+                    {g.inside > 0 && <> · {g.inside} inside now</>}
+                  </span>
+                </header>
+                <ScrollArea maxHeight={TABLE_HEIGHT} className="border-t border-line">
+                  <VisitTable rows={g.rows} sort={sort} withDate={false} />
+                </ScrollArea>
+              </Card>
+            )
+          })}
+          {days.length > dayLimit && (
+            <div className="flex items-center justify-center gap-3 text-[12.5px] text-ink-3">
+              <span className="tnum">
+                {dayLimit} of {days.length} days
+              </span>
+              <Button size="sm" onClick={() => setDayLimit(dayLimit + DAY_PAGE)}>
+                Show earlier days
+              </Button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <Card className="overflow-hidden">
+          <ScrollArea maxHeight={TABLE_HEIGHT}>
+            <VisitTable rows={rows.slice(0, limit)} sort={sort} withDate />
+          </ScrollArea>
+          {rows.length > limit && (
+            <div className="flex items-center justify-between border-t border-line px-5 py-3 text-[12.5px] text-ink-3">
+              <span className="tnum">
+                Showing {fmtInt(limit)} of {fmtInt(rows.length)}
+              </span>
+              <Button size="sm" onClick={() => setLimit(limit + PAGE * 2)}>
+                Show more
+              </Button>
+            </div>
+          )}
+        </Card>
+      )}
     </>
   )
 }
