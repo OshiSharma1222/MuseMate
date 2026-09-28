@@ -13,7 +13,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router'
+import { Link, NavLink, Outlet, useLocation } from 'react-router'
 import { MUSEUM } from '../data/catalog'
 import { painPoints } from '../data/selectors'
 import { getActiveCount, getResolved, isLive, setLive, useVersion } from '../data/store'
@@ -218,6 +218,54 @@ function RangePicker() {
   )
 }
 
+const FOOTER_LINKS: { heading: string; links: [string, string][] }[] = [
+  { heading: 'The floor', links: [['/', 'Overview'], ['/exhibition', 'Exhibition'], ['/artifacts', 'Artifacts']] },
+  { heading: 'Visitors', links: [['/visitors', 'Visits'], ['/reviews', 'Reviews']] },
+  { heading: 'Act on it', links: [['/pain-points', 'Pain points'], ['/reports', 'Reports']] },
+]
+
+function Footer() {
+  return (
+    <footer className="no-print border-t border-line bg-surface/85 backdrop-blur-md">
+      <div className="mx-auto grid max-w-[1320px] gap-8 px-4 pt-10 pb-6 sm:px-6 md:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))] lg:px-8">
+        <div className="max-w-sm">
+          <div className="font-serif text-[28px] leading-none text-ink">MuseMate</div>
+          <p className="mt-2 text-[13px] text-ink-2">
+            {MUSEUM.name}, {MUSEUM.city}. Open {MUSEUM.opensAt}:00 to {MUSEUM.closesAt}:00, closed on Mondays.
+          </p>
+          <p className="mt-3 text-[12.5px] text-ink-3">
+            Visitors appear only as anonymous visit IDs tied to a handheld, never by name. Everything here runs on the museum&apos;s
+            own edge server; nothing leaves the building.
+          </p>
+        </div>
+        {FOOTER_LINKS.map((col) => (
+          <nav key={col.heading} aria-label={col.heading}>
+            <div className="col-label mb-2.5">{col.heading}</div>
+            <ul className="space-y-1.5">
+              {col.links.map(([to, label]) => (
+                <li key={to}>
+                  <Link to={to} className="text-[13.5px] text-ink-2 hover:text-accent">
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
+      </div>
+      <div className="mx-auto flex max-w-[1320px] flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-line px-4 py-4 text-[12px] text-ink-3 sm:px-6 lg:px-8">
+        <span>SIH 2026 · PS 26214 · Team HackTuah</span>
+        <span>
+          Gallery photos from Wikimedia Commons,{' '}
+          <a href="/images/CREDITS.md" target="_blank" rel="noreferrer" className="underline decoration-line-strong underline-offset-2 hover:text-accent">
+            see credits
+          </a>
+        </span>
+      </div>
+    </footer>
+  )
+}
+
 export function Layout({ children }: { children?: ReactNode }) {
   const [open, setOpen] = useState(false)
   const location = useLocation()
@@ -249,7 +297,7 @@ export function Layout({ children }: { children?: ReactNode }) {
         </div>
       )}
 
-      <div className="min-w-0">
+      <div className="flex min-h-screen min-w-0 flex-col">
         <header className="no-print sticky top-0 z-30 border-b border-line bg-page/85 backdrop-blur-md">
           <div className="mx-auto flex h-14 max-w-[1320px] items-center gap-3 px-4 sm:px-6 lg:px-8">
             <button
@@ -271,7 +319,8 @@ export function Layout({ children }: { children?: ReactNode }) {
             </div>
           </div>
         </header>
-        <main className="mx-auto max-w-[1320px] px-4 py-7 sm:px-6 lg:px-8 lg:py-9 print:max-w-none print:p-0">{children ?? <Outlet />}</main>
+        <main className="mx-auto w-full max-w-[1320px] flex-1 px-4 py-7 sm:px-6 lg:px-8 lg:py-9 print:max-w-none print:p-0">{children ?? <Outlet />}</main>
+        <Footer />
       </div>
     </div>
   )
