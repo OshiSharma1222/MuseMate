@@ -1,7 +1,7 @@
 import { Wifi } from 'lucide-react'
 import { useState } from 'react'
 import { ChartFrame, Columns, HeatLegend, TrendChart, heatColor, useThemeColors } from '../components/charts'
-import { Badge, Card, CardHeader, Meter, Mono, PageHeader, ScrollX, Select, Stat, cx } from '../components/ui'
+import { Badge, Card, CardHeader, Meter, Mono, PageHeader, ScrollArea, Select, Stat, cx } from '../components/ui'
 import { MUSEUM } from '../data/catalog'
 import { dayStart } from '../data/seed'
 import {
@@ -67,6 +67,12 @@ export default function Exhibition() {
     return { ...m, qpv: ms.length ? ms.reduce((a, s) => a + queriesOf(s).length, 0) / ms.length : 0 }
   })
   const curious = [...modeRows].sort((a, b) => b.qpv - a.qpv)
+  const peakIndex = occ.findIndex((o) => o.t === peak.t)
+  const busiestDay = perDay.reduce((bi, b, i) => (b.queries > perDay[bi].queries ? i : bi), 0)
+  const lengths = avgByDay.map((d) => d.avgMin)
+  const longest = avgByDay.reduce((bi, d, i) => (d.avgMin > avgByDay[bi].avgMin ? i : bi), 0)
+  const meanLength = lengths.length ? lengths.reduce((a, b) => a + b, 0) / lengths.length : 0
+  const steady = lengths.length > 1 && Math.max(...lengths) - Math.min(...lengths) < meanLength * 0.15
   const child = modeRows.find((m) => m.mode === 'child')
 
   return (
@@ -96,16 +102,8 @@ export default function Exhibition() {
 
       <Card className="mb-5">
         <CardHeader
-          title="Visitors inside the museum"
-          subtitle={
-            peak.inside ? (
-              <>
-                Peak of {peak.inside} at {fmtTime(peak.t)} on {fmtDate(day)}
-              </>
-            ) : (
-              'Handhelds out at each quarter hour'
-            )
-          }
+          title={peak.inside ? `${peak.inside} people were inside at the ${fmtTime(peak.t)} peak` : 'Nobody inside yet'}
+          subtitle={`Handhelds out at each quarter hour on ${fmtDate(day)}`}
           right={
             <Select value={day} onChange={(e) => setPickedDay(Number(e.target.value))} aria-label="Day">
               {days.map((d) => (
@@ -124,6 +122,7 @@ export default function Exhibition() {
             height={250}
             xFormat={(t) => fmtTime(t)}
             series={[{ key: 'inside', name: 'Inside', color: c['series-1'], kind: 'area' }]}
+            callout={peak.inside && peakIndex >= 0 ? { index: peakIndex, key: 'inside', text: String(peak.inside) } : undefined}
           />
         </ChartFrame>
       </Card>
@@ -131,8 +130,8 @@ export default function Exhibition() {
       <div className="mb-5 grid gap-5 lg:grid-cols-2">
         <Card>
           <CardHeader
-            title="How long visits last"
-            subtitle={`Completed visits, 10-minute bands. Most last ${hist[histPeak].lo}–${hist[histPeak].lo + 10} min.`}
+            title={hist[histPeak].visitors ? `Most visits last ${hist[histPeak].lo}–${hist[histPeak].lo + 10} minutes` : 'How long visits last'}
+            subtitle="Completed visits in 10-minute bands"
           />
           <ChartFrame>
             <Columns
@@ -150,8 +149,14 @@ export default function Exhibition() {
         </Card>
         <Card>
           <CardHeader
-            title="Average visit length per day"
-            subtitle={range.key === 'today' ? 'Last 7 days, since today is still running' : 'Minutes from pick-up to return'}
+            title={
+              !lengths.length
+                ? 'Average visit length'
+                : steady
+                  ? `Visits hold steady at about ${Math.round(meanLength)} minutes`
+                  : `Visits ran longest on ${fmtDate(avgByDay[longest].t)}, ${Math.round(avgByDay[longest].avgMin)} minutes`
+            }
+            subtitle={range.key === 'today' ? 'Average minutes from pick-up to return, last 7 days' : 'Average minutes from pick-up to return, each day'}
           />
           <ChartFrame>
             <TrendChart
@@ -170,8 +175,8 @@ export default function Exhibition() {
       <div className="mb-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
         <Card>
           <CardHeader
-            title="Questions per day"
-            subtitle={range.key === 'today' ? 'Last 7 days' : 'Every push-to-talk question the guide received'}
+            title={perDay[busiestDay]?.queries ? `${fmtDate(perDay[busiestDay].t)} drew the most questions` : 'Questions per day'}
+            subtitle={range.key === 'today' ? 'Push-to-talk questions each day, last 7 days' : 'Push-to-talk questions the guide received each day'}
           />
           <ChartFrame>
             <Columns
@@ -180,7 +185,6 @@ export default function Exhibition() {
               yKey="queries"
               name="Questions"
               height={230}
-              color={c['series-1']}
               xFormat={(t) => fmtDateShort(Number(t))}
               titleFormat={(t) => fmtDate(Number(t))}
               yFormat={fmtInt}
@@ -189,8 +193,10 @@ export default function Exhibition() {
         </Card>
 
         <Card>
-          <CardHeader title="When visitors arrive" subtitle="Average arrivals per hour, last 30 days" right={<HeatLegend max={heat.max} format={(n) => fmt1(n)} />} />
-          <ScrollX className="px-5 pb-5">
+          <CardHeader
+            title={peakCell.value ? `${peakCell.wd} at ${fmtHour(peakCell.h)} is the rush hour` : 'When visitors arrive'}
+            subtitle="Average arrivals per hour over the last 30 days" right={<HeatLegend max={heat.max} format={(n) => fmt1(n)} />} />
+          <ScrollArea className="px-5 pb-5">
             <div className="min-w-[360px]">
               <div className="grid grid-cols-[40px_repeat(8,minmax(0,1fr))] gap-[3px]">
                 <span />
@@ -203,7 +209,7 @@ export default function Exhibition() {
                   <div key={r.wd} className="contents">
                     <span className="flex items-center text-[12px] text-ink-2">{r.name}</span>
                     {r.closed ? (
-                      <span className="col-span-8 flex h-8 items-center justify-center rounded-md border border-dashed border-line-strong text-[11.5px] text-ink-3">
+                      <span className="col-span-8 flex h-8 items-center justify-center rounded-[2px] border border-dashed border-line-strong text-[11.5px] text-ink-3">
                         Closed
                       </span>
                     ) : (
@@ -211,7 +217,7 @@ export default function Exhibition() {
                         <span
                           key={cell.h}
                           title={`${r.name} ${fmtHour(cell.h)}–${fmtHour(cell.h + 1)}: ${fmt1(cell.value)} arrivals on average`}
-                          className="group relative h-8 rounded-md"
+                          className="group relative h-8 rounded-[2px]"
                           style={{ background: heatColor(cell.value, heat.max) }}
                         >
                           <span
@@ -229,17 +235,17 @@ export default function Exhibition() {
                 ))}
               </div>
             </div>
-          </ScrollX>
+          </ScrollArea>
         </Card>
       </div>
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
         <Card className="overflow-hidden">
           <CardHeader title="Through the galleries" subtitle="Share of visitors who tapped at least one artifact in each room, in floor-plan order" />
-          <ScrollX>
+          <ScrollArea>
             <table className="w-full min-w-[500px] text-[13px]">
               <thead>
-                <tr className="text-left text-[11px] font-semibold tracking-[0.06em] text-ink-3 uppercase">
+                <tr className="text-left col-label">
                   <th className="border-y border-line px-3 py-2 whitespace-nowrap pl-5">Gallery</th>
                   <th className="w-[30%] border-y border-line px-3 py-2">Reached</th>
                   <th className="border-y border-line px-3 py-2 whitespace-nowrap text-right">Avg dwell</th>
@@ -280,15 +286,15 @@ export default function Exhibition() {
                 })}
               </tbody>
             </table>
-          </ScrollX>
+          </ScrollArea>
         </Card>
 
         <Card className="overflow-hidden">
           <CardHeader title="By narration mode" subtitle="Chosen at the entry tag; switchable by voice" />
-          <ScrollX>
+          <ScrollArea>
             <table className="w-full text-[13px]">
               <thead>
-                <tr className="text-left text-[11px] font-semibold tracking-[0.06em] text-ink-3 uppercase">
+                <tr className="text-left col-label">
                   <th className="border-y border-line px-3 py-2 whitespace-nowrap pl-5">Mode</th>
                   <th className="border-y border-line px-3 py-2 whitespace-nowrap text-right">Visitors</th>
                   <th className="border-y border-line px-3 py-2 whitespace-nowrap text-right">Avg visit</th>
@@ -313,7 +319,7 @@ export default function Exhibition() {
                 ))}
               </tbody>
             </table>
-          </ScrollX>
+          </ScrollArea>
           {curious[0]?.qpv > 0 && (
             <p className="border-t border-line px-5 py-3 text-[12px] text-ink-3">
               {curious[0].name} mode visitors ask the most, {fmt1(curious[0].qpv)} questions each

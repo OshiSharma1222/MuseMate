@@ -20,6 +20,8 @@ import { useRange } from '../lib/range'
 
 const SEVERITY_TONE = { high: 'bad', medium: 'warn', low: 'neutral' } as const
 
+const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
 function greeting() {
   const h = new Date().getHours()
   return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'
@@ -61,6 +63,10 @@ export default function Overview() {
   const resolved = getResolved()
   const issues = painPoints(v, range.from, range.to).filter((i) => !resolved[i.key]).slice(0, 3)
   const hourly = range.bucket === 'hour'
+  const peak = buckets.reduce((bi, b, i) => (b.visitors > buckets[bi].visitors ? i : bi), 0)
+  const peakAt = buckets[peak]
+  const topQpv = qpv.reduce((bi, b, i) => (b.visitors > qpv[bi].visitors ? i : bi), 0)
+  const cap = (t: string) => t.replace(/^./, (m) => m.toUpperCase())
   const empty = cur.visitors === 0
   const closedToday = range.key === 'today' && new Date().getDay() === MUSEUM.closedDay
 
@@ -129,13 +135,17 @@ export default function Overview() {
       <div className="mb-5 grid gap-5 xl:grid-cols-[minmax(0,1fr)_380px]">
         <Card>
           <CardHeader
-            title={hourly ? 'Arrivals by hour' : 'Visitors per day'}
-            subtitle={hourly ? 'Handhelds picked up at the counter' : 'Handhelds picked up each day; Mondays closed'}
-            right={
-              <div className="flex items-center gap-3">
-                <LegendKey color={c['series-1']} label={range.label} />
-                <LegendKey color={c['ink-3']} kind="faint" label={range.prevLabel.replace(/^./, (m) => m.toUpperCase())} />
-              </div>
+            title={
+              !peakAt?.visitors
+                ? 'No arrivals yet'
+                : hourly
+                  ? `${fmtHour(new Date(peakAt.t).getHours())} has been the busiest hour, with ${fmtInt(peakAt.visitors)} arrivals`
+                  : `${range.key === '7d' ? WEEKDAYS[new Date(peakAt.t).getDay()] : fmtDate(peakAt.t)} brought the most visitors: ${fmtInt(peakAt.visitors)}`
+            }
+            subtitle={
+              hourly
+                ? `Handhelds picked up each hour, against the ${range.prevLabel}`
+                : `Handhelds picked up each day against the ${range.prevLabel}. Closed on Mondays.`
             }
           />
           <ChartFrame>
@@ -149,9 +159,12 @@ export default function Overview() {
                 xFormat={(t) => (hourly ? fmtHour(new Date(t).getHours()) : fmtDateShort(t))}
                 titleFormat={(t) => (hourly ? `${fmtHour(new Date(t).getHours())}–${fmtHour(new Date(t).getHours() + 1)}` : fmtDate(t))}
                 series={[
-                  { key: 'prev', name: range.prevLabel.replace(/^./, (m) => m.toUpperCase()), color: c['ink-3'], kind: 'line', faint: true },
-                  { key: 'visitors', name: 'Visitors', color: c['series-1'], kind: 'area' },
+                  { key: 'prev', name: cap(range.prevLabel), color: c['ink-3'], kind: 'line', faint: true, endLabel: () => cap(range.prevLabel) },
+                  { key: 'visitors', name: 'Visitors', color: c['series-1'], kind: 'area', endLabel: () => range.label },
                 ]}
+                callout={
+                  peakAt?.visitors && peak !== buckets.length - 1 ? { index: peak, key: 'visitors', text: fmtInt(peakAt.visitors) } : undefined
+                }
               />
             )}
           </ChartFrame>
@@ -185,7 +198,7 @@ export default function Overview() {
               </Link>
             }
           />
-          <div className="grid grid-cols-[20px_minmax(0,1fr)_120px_84px] gap-3 border-t border-line px-5 py-2 text-[11px] font-semibold tracking-[0.06em] text-ink-3 uppercase max-sm:grid-cols-[20px_minmax(0,1fr)_84px]">
+          <div className="grid grid-cols-[20px_minmax(0,1fr)_120px_84px] gap-3 border-t border-line px-5 py-2 col-label max-sm:grid-cols-[20px_minmax(0,1fr)_84px]">
             <span>#</span>
             <span>Artifact</span>
             <span className="max-sm:hidden">Questions</span>
@@ -239,7 +252,7 @@ export default function Overview() {
               <span className="text-[13px] font-medium text-ink">Narration mode</span>
               <span className="text-[12px] text-ink-3">share of visitors</span>
             </div>
-            <div className="flex h-2.5 gap-[2px] overflow-hidden rounded-full">
+            <div className="flex h-2.5 gap-[2px] overflow-hidden rounded-[1px]">
               {modeRows.map((m, i) =>
                 m.share > 0 ? (
                   <span key={m.mode} style={{ width: `${m.share * 100}%`, background: c[`series-${i + 1}` as 'series-1'] }} />
@@ -260,7 +273,10 @@ export default function Overview() {
 
       <div className="grid gap-5 lg:grid-cols-3">
         <Card>
-          <CardHeader title="Questions per visitor" subtitle="How many questions each visitor asked" />
+          <CardHeader
+            title={qpv[topQpv].visitors ? `Most visitors ask ${qpv[topQpv].label === '0' ? 'nothing' : `${qpv[topQpv].label} questions`}` : 'Questions per visitor'}
+            subtitle="Visitors by how many questions they asked"
+          />
           <ChartFrame>
             <Columns
               data={qpv}

@@ -6,6 +6,7 @@ import {
   CartesianGrid,
   ComposedChart,
   Line,
+  ReferenceDot,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -14,10 +15,12 @@ import {
 import { cx } from './ui'
 
 /*
-  Charts follow one set of rules: thin marks, 2px lines, a 10% area wash,
-  solid hairline grids, 4px rounded bar ends at most 24px thick, a tooltip on
-  every plot, and text in ink colours rather than series colours. Colours are
-  read from the CSS tokens so the dark theme needs no chart code.
+  Charts are drawn like a newspaper's: straight line segments rather than
+  smoothed curves, series named at the end of their line instead of in a
+  legend, the notable point marked and labelled on the chart, square bars in
+  a muted tone with only the one that matters in colour, a firm baseline and
+  hairline grids. Text stays in ink colours. Colours are read from the CSS
+  tokens so the dark theme needs no chart code.
 */
 
 const TOKENS = ['series-1', 'series-2', 'series-3', 'series-4', 'ink', 'ink-2', 'ink-3', 'grid', 'axis', 'surface', 'surface-3', 'bad', 'line-strong'] as const
@@ -63,7 +66,7 @@ interface TipRow {
 
 export function TooltipBox({ title, rows }: { title: ReactNode; rows: TipRow[] }) {
   return (
-    <div className="min-w-[160px] rounded-lg border border-line-strong bg-surface px-3 py-2 text-[12.5px] shadow-[0_8px_24px_-8px_rgb(0_0_0/0.25)]">
+    <div className="min-w-[150px] rounded-[3px] border border-line-strong bg-surface px-3 py-2 text-[12.5px] shadow-[0_6px_18px_-8px_rgb(0_0_0/0.3)]">
       <div className="mb-1.5 font-medium text-ink">{title}</div>
       <div className="space-y-1">
         {rows.map((r, i) => (
@@ -85,8 +88,17 @@ export interface SeriesSpec<T> {
   name: string
   color: string
   kind: 'area' | 'line'
-  /** Comparison lines are drawn thinner and fainter behind the main series. */
+  /** Comparison lines are drawn dotted and fainter behind the main series. */
   faint?: boolean
+  /** Text written at the end of the line, in place of a legend entry. */
+  endLabel?: (last: number) => string
+}
+
+/** A point worth pointing at, labelled on the chart itself. */
+export interface Callout {
+  index: number
+  key: string
+  text: string
 }
 
 export function TrendChart<T extends Record<string, number>>({
@@ -98,6 +110,7 @@ export function TrendChart<T extends Record<string, number>>({
   titleFormat,
   yFormat = (n) => String(n),
   valueFormat,
+  callout,
 }: {
   data: T[]
   xKey: keyof T & string
@@ -107,18 +120,41 @@ export function TrendChart<T extends Record<string, number>>({
   titleFormat?: (v: number) => string
   yFormat?: (v: number) => string
   valueFormat?: (v: number) => string
+  callout?: Callout
 }) {
   const c = useThemeColors()
+  const labelled = series.some((s) => s.endLabel)
+  const last = data.length - 1
+  // When the comparison ends close to the main line, move its label clear of the main one.
+  const main = series.find((s) => s.endLabel && !s.faint)
+  const top = Math.max(1, ...data.flatMap((d) => series.map((s) => Number(d[s.key]) || 0)))
+  const nudge = (s: SeriesSpec<T>) => {
+    if (!s.faint || !main || !data[last]) return 4
+    const mine = Number(data[last][s.key])
+    const theirs = Number(data[last][main.key])
+    if (Math.abs(mine - theirs) > top * 0.1) return 4
+    return mine <= theirs ? 18 : -10
+  }
+  const endLabel = (s: SeriesSpec<T>) =>
+    s.endLabel
+      ? (p: { index?: number; x?: unknown; y?: unknown; value?: unknown }) =>
+          p.index === last ? (
+            <text x={Number(p.x) + 8} y={Number(p.y)} dy={nudge(s)} fontSize={12} fontWeight={s.faint ? 400 : 600} fill={s.faint ? c['ink-3'] : c.ink}>
+              {s.endLabel!(Number(p.value))}
+            </text>
+          ) : null
+      : false
+  const point = callout ? data[callout.index] : undefined
   return (
     <div style={{ height }} className="w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={data as Record<string, unknown>[]} margin={{ top: 8, right: 8, bottom: 0, left: -8 }}>
+        <ComposedChart data={data as Record<string, unknown>[]} margin={{ top: 24, right: labelled ? 118 : 12, bottom: 0, left: -8 }}>
           <CartesianGrid vertical={false} stroke={c.grid} />
           <XAxis
             dataKey={String(xKey)}
             tickFormatter={xFormat}
             tick={axisTick(c)}
-            axisLine={{ stroke: c.axis }}
+            axisLine={{ stroke: c['ink-3'] }}
             tickLine={false}
             minTickGap={24}
             tickMargin={8}
@@ -145,13 +181,14 @@ export function TrendChart<T extends Record<string, number>>({
                 key={s.key}
                 dataKey={String(s.key)}
                 name={s.name}
-                type="monotone"
+                type="linear"
                 stroke={s.color}
                 strokeWidth={2}
                 fill={s.color}
-                fillOpacity={0.1}
-                activeDot={{ r: 4, strokeWidth: 2, stroke: c.surface, fill: s.color }}
+                fillOpacity={0.07}
+                activeDot={{ r: 3.5, strokeWidth: 2, stroke: c.surface, fill: s.color }}
                 dot={false}
+                label={endLabel(s)}
                 isAnimationActive={false}
               />
             ) : (
@@ -159,15 +196,28 @@ export function TrendChart<T extends Record<string, number>>({
                 key={s.key}
                 dataKey={String(s.key)}
                 name={s.name}
-                type="monotone"
+                type="linear"
                 stroke={s.faint ? c['ink-3'] : s.color}
-                strokeOpacity={s.faint ? 0.55 : 1}
+                strokeOpacity={s.faint ? 0.85 : 1}
                 strokeWidth={s.faint ? 1.5 : 2}
+                strokeDasharray={s.faint ? '2 3' : undefined}
                 dot={false}
-                activeDot={s.faint ? false : { r: 4, strokeWidth: 2, stroke: c.surface, fill: s.color }}
+                activeDot={s.faint ? false : { r: 3.5, strokeWidth: 2, stroke: c.surface, fill: s.color }}
+                label={endLabel(s)}
                 isAnimationActive={false}
               />
             ),
+          )}
+          {callout && point && (
+            <ReferenceDot
+              x={point[xKey]}
+              y={point[callout.key as keyof T]}
+              r={3.5}
+              fill={c.ink}
+              stroke={c.surface}
+              strokeWidth={2}
+              label={{ value: callout.text, position: 'top', offset: 9, fontSize: 12, fontWeight: 600, fill: c.ink }}
+            />
           )}
         </ComposedChart>
       </ResponsiveContainer>
@@ -196,21 +246,22 @@ export function Columns<T extends Record<string, unknown>>({
   xFormat?: (v: T[keyof T]) => string
   titleFormat?: (v: T[keyof T]) => string
   yFormat?: (n: number) => string
-  /** Index of a bar to draw in the accent; the rest recede. */
+  /** Index of the bar drawn in colour with its value written on top; the rest stay muted. Defaults to the tallest. */
   highlight?: number
 }) {
   const c = useThemeColors()
   const fill = color ?? c['series-1']
+  const top = highlight ?? data.reduce((bi, row, i) => (Number(row[yKey]) > Number(data[bi][yKey]) ? i : bi), 0)
   return (
     <div style={{ height }} className="w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data as Record<string, unknown>[]} margin={{ top: 8, right: 8, bottom: 0, left: -8 }} barCategoryGap="18%">
+        <BarChart data={data as Record<string, unknown>[]} margin={{ top: 24, right: 12, bottom: 0, left: -8 }} barCategoryGap="22%">
           <CartesianGrid vertical={false} stroke={c.grid} />
           <XAxis
             dataKey={String(xKey)}
             tickFormatter={(v) => xFormat(v)}
             tick={axisTick(c)}
-            axisLine={{ stroke: c.axis }}
+            axisLine={{ stroke: c['ink-3'] }}
             tickLine={false}
             interval="preserveStartEnd"
             tickMargin={8}
@@ -232,19 +283,20 @@ export function Columns<T extends Record<string, unknown>>({
           <Bar
             dataKey={String(yKey)}
             name={name}
-            radius={[4, 4, 0, 0]}
-            maxBarSize={24}
+            maxBarSize={28}
             isAnimationActive={false}
             shape={(props: { x?: number; y?: number; width?: number; height?: number; index?: number }) => {
               const { x = 0, y = 0, width = 0, height: h = 0, index = 0 } = props
-              const r = Math.min(4, width / 2, h)
-              const faded = highlight !== undefined && index !== highlight
+              const on = index === top
               return (
-                <path
-                  d={`M${x},${y + h} V${y + r} Q${x},${y} ${x + r},${y} H${x + width - r} Q${x + width},${y} ${x + width},${y + r} V${y + h} Z`}
-                  fill={fill}
-                  fillOpacity={faded ? 0.35 : 1}
-                />
+                <g>
+                  <rect x={x} y={y} width={width} height={h} fill={on ? fill : c['line-strong']} />
+                  {on && h > 0 && (
+                    <text x={x + width / 2} y={y - 7} textAnchor="middle" fontSize={12} fontWeight={600} fill={c.ink}>
+                      {yFormat(Number(data[index][yKey]))}
+                    </text>
+                  )}
+                </g>
               )
             }}
           />
@@ -265,7 +317,6 @@ export function Sparkline({ values, width = 96, height = 28, color }: { values: 
   const stroke = color ?? c['series-1']
   return (
     <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden className="overflow-visible">
-      <path d={`${d} L${width},${height} L0,${height} Z`} fill={stroke} fillOpacity={0.1} />
       <path d={d} fill="none" stroke={stroke} strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" />
       <circle cx={width} cy={y(values[values.length - 1])} r={2.5} fill={stroke} stroke={c.surface} strokeWidth={1.5} />
     </svg>
@@ -285,7 +336,7 @@ export function HeatLegend({ max, format }: { max: number; format: (n: number) =
       <span>{format(0)}</span>
       <div className="flex gap-[2px]">
         {[0, 1, 2, 3, 4, 5].map((i) => (
-          <span key={i} className="h-2.5 w-5 first:rounded-l-sm last:rounded-r-sm" style={{ background: `var(--heat-${i})` }} />
+          <span key={i} className="h-2.5 w-5" style={{ background: `var(--heat-${i})` }} />
         ))}
       </div>
       <span>{format(max)}</span>
