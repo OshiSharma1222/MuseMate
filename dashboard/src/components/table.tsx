@@ -45,7 +45,7 @@ export function SortTh<K extends string>({
     <th
       aria-sort={on ? (sort.dir === 'asc' ? 'ascending' : 'descending') : 'none'}
       className={cx(
-        'sticky top-0 z-[1] border-b border-line bg-surface px-3 py-0 first:pl-5 last:pr-5',
+        'sticky top-0 z-[1] border-b border-line-strong bg-surface px-3 py-0 first:pl-5 last:pr-5',
         align === 'right' ? 'text-right' : 'text-left',
         className,
       )}
@@ -53,8 +53,8 @@ export function SortTh<K extends string>({
       <button
         onClick={() => sort.toggle(k, firstDir)}
         className={cx(
-          'inline-flex h-9 items-center gap-1 text-[11px] font-semibold tracking-[0.06em] whitespace-nowrap uppercase',
-          on ? 'text-ink' : 'text-ink-3 hover:text-ink-2',
+          'col-label inline-flex h-9 items-center gap-1 whitespace-nowrap',
+          on ? 'text-ink!' : 'hover:text-ink-2',
           align === 'right' && 'flex-row-reverse',
         )}
       >

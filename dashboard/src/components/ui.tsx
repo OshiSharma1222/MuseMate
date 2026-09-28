@@ -8,7 +8,7 @@ export function cx(...parts: (string | false | null | undefined)[]) {
 }
 
 export function Card({ className, children }: { className?: string; children: ReactNode }) {
-  return <section className={cx('card-rise min-w-0 rounded-xl border border-line bg-surface shadow-card', className)}>{children}</section>
+  return <section className={cx('card-rise min-w-0 rounded-md border border-line bg-surface shadow-card', className)}>{children}</section>
 }
 
 export function CardHeader({
@@ -25,8 +25,8 @@ export function CardHeader({
   return (
     <header className={cx('flex flex-wrap items-start justify-between gap-x-4 gap-y-2 px-5 pt-4 pb-3', className)}>
       <div className="min-w-0">
-        <h2 className="text-[14px] font-semibold text-ink">{title}</h2>
-        {subtitle && <p className="mt-0.5 text-[13px] text-ink-3">{subtitle}</p>}
+        <h2 className="font-serif text-[22px] leading-[1.15] text-ink">{title}</h2>
+        {subtitle && <p className="mt-1 text-[13px] text-ink-3">{subtitle}</p>}
       </div>
       {right && <div className="flex shrink-0 items-center gap-2">{right}</div>}
     </header>
@@ -34,19 +34,23 @@ export function CardHeader({
 }
 
 /**
- * A sideways-scrolling strip for wide tables. Fades on the cut edges show
- * there is more to see, since the scrollbar of a long table sits far below
- * the fold.
+ * A scrolling frame for tables. Wide tables scroll sideways and, given a
+ * maxHeight, long ones scroll inside the frame under a sticky header, so the
+ * page keeps its shape. Fades on the cut edges show there is more to see.
  */
-export function ScrollX({ className, children }: { className?: string; children: ReactNode }) {
+export function ScrollArea({ className, maxHeight, children }: { className?: string; maxHeight?: string; children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null)
-  const [more, setMore] = useState({ left: false, right: false })
+  const [more, setMore] = useState({ left: false, right: false, down: false })
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
     const update = () =>
-      setMore({ left: el.scrollLeft > 1, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 1 })
+      setMore({
+        left: el.scrollLeft > 1,
+        right: el.scrollLeft + el.clientWidth < el.scrollWidth - 1,
+        down: el.scrollTop + el.clientHeight < el.scrollHeight - 1,
+      })
     update()
     el.addEventListener('scroll', update, { passive: true })
     const ro = new ResizeObserver(update)
@@ -60,11 +64,16 @@ export function ScrollX({ className, children }: { className?: string; children:
 
   return (
     <div className="relative">
-      <div ref={ref} className={cx('overflow-x-auto scroll-thin', className)}>
+      <div
+        ref={ref}
+        className={cx(maxHeight ? 'overflow-auto' : 'overflow-x-auto', 'scroll-thin', className)}
+        style={maxHeight ? { maxHeight } : undefined}
+      >
         {children}
       </div>
       <div aria-hidden className={cx('scroll-fade left-0', more.left && 'on')} />
       <div aria-hidden className={cx('scroll-fade right-0', more.right && 'on')} />
+      <div aria-hidden className={cx('scroll-fade-down', more.down && 'on')} />
     </div>
   )
 }
@@ -123,7 +132,7 @@ export function Stat({
     <div className={cx('min-w-0', className)}>
       <div className="text-[13px] text-ink-2">{label}</div>
       <div className="mt-1.5 flex items-baseline gap-1">
-        <span className="text-[28px] leading-none font-semibold tracking-[-0.02em] text-ink tnum">
+        <span className="font-serif text-[36px] leading-none text-ink tnum">
           {typeof value === 'string' ? <CountUp text={value} /> : value}
         </span>
         {unit && <span className="text-[14px] text-ink-3">{unit}</span>}
@@ -152,7 +161,7 @@ export function Badge({ tone = 'neutral', children, className }: { tone?: Tone; 
   return (
     <span
       className={cx(
-        'inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[11.5px] leading-[1.35] font-medium whitespace-nowrap',
+        'inline-flex items-center gap-1 rounded-[3px] px-1.5 py-0.5 text-[11.5px] leading-[1.35] font-medium whitespace-nowrap',
         TONES[tone],
         className,
       )}
@@ -292,10 +301,10 @@ export function Toggle({
 export function Meter({ value, max = 1, tone = 'accent' }: { value: number; max?: number; tone?: 'accent' | 'bad' | 'warn' | 'muted' }) {
   const pct = Math.max(0, Math.min(1, max ? value / max : 0)) * 100
   return (
-    <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-3">
+    <div className="h-[5px] w-full overflow-hidden rounded-[1px] bg-surface-3">
       <div
         className={cx(
-          'meter-fill h-full rounded-full',
+          'meter-fill h-full',
           tone === 'accent' && 'bg-s1',
           tone === 'bad' && 'bg-bad',
           tone === 'warn' && 'bg-s2',
@@ -333,7 +342,7 @@ export function Th({ children, className, align = 'left' }: { children?: ReactNo
   return (
     <th
       className={cx(
-        'sticky top-0 z-[1] border-b border-line bg-surface px-3 py-2.5 text-[11px] font-semibold tracking-[0.06em] whitespace-nowrap text-ink-3 uppercase first:pl-5 last:pr-5',
+        'sticky top-0 z-[1] border-b border-line-strong bg-surface px-3 py-2.5 col-label whitespace-nowrap first:pl-5 last:pr-5',
         align === 'right' ? 'text-right' : 'text-left',
         className,
       )}
@@ -347,7 +356,7 @@ export function Td({ children, className, align = 'left' }: { children?: ReactNo
   return (
     <td
       className={cx(
-        'border-b border-line px-3 py-2.5 align-middle first:pl-5 last:pr-5',
+        'border-b border-line px-3 py-2 align-middle first:pl-5 last:pr-5',
         align === 'right' && 'text-right tnum',
         className,
       )}
@@ -356,3 +365,6 @@ export function Td({ children, className, align = 'left' }: { children?: ReactNo
     </td>
   )
 }
+
+/** Old name, until every page has moved to ScrollArea. */
+export const ScrollX = ScrollArea

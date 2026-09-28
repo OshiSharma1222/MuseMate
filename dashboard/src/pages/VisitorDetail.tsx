@@ -190,9 +190,9 @@ export default function VisitorDetail() {
                             <Clock3 size={12} /> {fmtSec(st.dwellSec)}
                           </span>
                           <span className="flex items-center gap-2">
-                            <span className="h-1 w-20 overflow-hidden rounded-full bg-surface-3">
+                            <span className="h-1 w-20 overflow-hidden rounded-[1px] bg-surface-3">
                               <span
-                                className={cx('block h-full rounded-full', st.skipped ? 'bg-bad' : 'bg-s1')}
+                                className={cx('block h-full', st.skipped ? 'bg-bad' : 'bg-s1')}
                                 style={{ width: `${st.listenedPct * 100}%` }}
                               />
                             </span>

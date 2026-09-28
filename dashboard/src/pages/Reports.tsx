@@ -24,7 +24,7 @@ function ExportCard({
   return (
     <Card className="flex flex-col p-5">
       <div className="mb-3 inline-flex size-9 items-center justify-center rounded-lg bg-surface-3 text-ink-2">{icon}</div>
-      <div className="text-[14px] font-semibold text-ink">{title}</div>
+      <div className="font-serif text-[22px] leading-tight text-ink">{title}</div>
       <div className="mt-0.5 text-[12.5px] text-ink-3">{rows}</div>
       <p className="mt-2 flex-1 text-[13px] text-ink-2">{detail}</p>
       <Button className="mt-4 self-start" icon={<Download size={15} />} onClick={onClick}>
@@ -93,7 +93,7 @@ export default function Reports() {
 
         <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h2 className="text-[15px] font-semibold text-ink">Exhibition report</h2>
+            <h2 className="font-serif text-[22px] leading-tight text-ink">Exhibition report</h2>
             <p className="text-[13px] text-ink-3">
               Generated from the edge server for {range.label.toLowerCase()}. Pick the period in the top bar.
             </p>
@@ -128,7 +128,7 @@ export default function Reports() {
           ].map((k) => (
             <div key={k.label}>
               <div className="text-[12.5px] text-ink-3">{k.label}</div>
-              <div className="mt-1 text-[26px] leading-none font-semibold tracking-[-0.02em] text-ink">{k.value}</div>
+              <div className="mt-1 font-serif text-[32px] leading-none text-ink tnum">{k.value}</div>
               <div className="mt-1.5">
                 <Delta value={k.d} goodWhen={k.good} />
               </div>
@@ -194,7 +194,7 @@ export default function Reports() {
         <H>Most visited artifacts</H>
         <table className="w-full text-[13px]">
           <thead>
-            <tr className="text-left text-[11px] font-semibold tracking-[0.06em] text-ink-3 uppercase">
+            <tr className="text-left col-label">
               <th className="pb-2">Artifact</th>
               <th className="pb-2 text-right">Visitors</th>
               <th className="pb-2 text-right">Questions</th>

@@ -151,6 +151,12 @@
   .tnum {
     font-variant-numeric: tabular-nums;
   }
+  /* Column and list headings: quiet sentence case, like a catalogue. */
+  .col-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+  }
   /* The small spaced capitals used for field and section labels. */
   .eyebrow {
     font-size: 11px;
@@ -396,6 +402,18 @@
   --fade-dir: 270deg;
 }
 .scroll-fade.on {
+  opacity: 1;
+}
+.scroll-fade-down {
+  pointer-events: none;
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 44px;
+  background-image: linear-gradient(0deg, var(--surface) 15%, transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.scroll-fade-down.on {
   opacity: 1;
 }
 
