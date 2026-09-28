@@ -100,7 +100,7 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
                   onClick={onNavigate}
                   className={({ isActive }) =>
                     cx(
-                      'group flex h-8 items-center gap-2.5 rounded-lg border px-2.5 text-[13.5px] transition-colors',
+                      'nav-link group flex h-8 items-center gap-2.5 rounded-lg border px-2.5 text-[13.5px] transition-colors',
                       isActive
                         ? 'border-line bg-surface font-medium text-ink shadow-card'
                         : 'border-transparent text-ink-2 hover:bg-surface-3/70 hover:text-ink',
@@ -109,7 +109,7 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
                 >
                   {({ isActive }) => (
                     <>
-                      <item.icon size={16} strokeWidth={1.75} className={isActive ? 'text-accent' : 'text-ink-3 group-hover:text-ink-2'} />
+                      <item.icon size={16} strokeWidth={1.75} className={cx('nav-icon', isActive ? 'text-accent' : 'text-ink-3 group-hover:text-ink-2')} />
                       <span className="flex-1">{item.label}</span>
                       {item.badge !== undefined && (
                         <span className="rounded-md bg-bad-wash px-1.5 text-[11px] leading-[18px] font-semibold text-bad tnum">

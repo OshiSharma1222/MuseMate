@@ -234,8 +234,9 @@
 }
 
 /*
-  Scenery and motion. Gallery photos sit behind the app and in page banners,
-  and the overview hero drifts through the galleries. All of it stops for
+  Scenery and motion. Gallery photos sit behind the app and in page banners;
+  cards rise in one after another, meters and charts draw themselves in, and
+  the overview hero drifts through the galleries. All of it stops for
   prefers-reduced-motion.
 */
 @keyframes rise {
@@ -260,6 +261,21 @@
   }
 }
 
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
 @keyframes drift-up {
   from {
     transform: translate(0, 0);
@@ -277,6 +293,15 @@
   to {
     transform: translate(-6px, -100%);
     opacity: 0;
+  }
+}
+
+@keyframes wiggle {
+  30% {
+    transform: rotate(-12deg) scale(1.12);
+  }
+  60% {
+    transform: rotate(8deg) scale(1.12);
   }
 }
 
@@ -337,13 +362,54 @@
   opacity: var(--glow, 0.6);
 }
 
+.card-rise {
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+.card-rise:hover {
+  border-color: var(--line-strong);
+  box-shadow: 0 1px 2px rgb(29 27 24 / 0.05), 0 14px 32px -18px rgb(29 27 24 / 0.28);
+}
+.card-rise:nth-child(2) {
+  animation-delay: 70ms;
+}
+.card-rise:nth-child(3) {
+  animation-delay: 140ms;
+}
+.card-rise:nth-child(4) {
+  animation-delay: 210ms;
+}
+.card-rise:nth-child(n + 5) {
+  animation-delay: 280ms;
+}
+
+.meter-fill {
+  transform-origin: left;
+  transition: width 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  animation: grow-x 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s backwards;
+}
+
+.chart-wipe {
+  animation: wipe 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.15s backwards;
+}
+
+.nav-link:hover .nav-icon {
+  animation: wiggle 0.5s ease-in-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .live-dot::after,
   .feed-enter,
   .backdrop-photo,
   .banner,
   .banner-text,
-  .kenburns {
+  .kenburns,
+  .card-rise,
+  .meter-fill,
+  .chart-wipe,
+  .nav-link:hover .nav-icon {
     animation: none;
   }
   .mote {

@@ -299,5 +299,5 @@ export function HeatLegend({ max, format }: { max: number; format: (n: number) =
 }
 
 export function ChartFrame({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cx('px-3 pb-4', className)}>{children}</div>
+  return <div className={cx('chart-wipe px-3 pb-4', className)}>{children}</div>
 }

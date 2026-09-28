@@ -1,14 +1,14 @@
 import { ArrowDownRight, ArrowUpRight, Minus, Search } from 'lucide-react'
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react'
 import { fmtPct } from '../lib/format'
-import { PageBanner } from './scenery'
+import { CountUp, PageBanner } from './scenery'
 
 export function cx(...parts: (string | false | null | undefined)[]) {
   return parts.filter(Boolean).join(' ')
 }
 
 export function Card({ className, children }: { className?: string; children: ReactNode }) {
-  return <section className={cx('min-w-0 rounded-xl border border-line bg-surface shadow-card', className)}>{children}</section>
+  return <section className={cx('card-rise min-w-0 rounded-xl border border-line bg-surface shadow-card', className)}>{children}</section>
 }
 
 export function CardHeader({
@@ -87,7 +87,9 @@ export function Stat({
     <div className={cx('min-w-0', className)}>
       <div className="text-[13px] text-ink-2">{label}</div>
       <div className="mt-1.5 flex items-baseline gap-1">
-        <span className="text-[28px] leading-none font-semibold tracking-[-0.02em] text-ink">{value}</span>
+        <span className="text-[28px] leading-none font-semibold tracking-[-0.02em] text-ink tnum">
+          {typeof value === 'string' ? <CountUp text={value} /> : value}
+        </span>
         {unit && <span className="text-[14px] text-ink-3">{unit}</span>}
       </div>
       {(delta || foot) && (
@@ -257,7 +259,7 @@ export function Meter({ value, max = 1, tone = 'accent' }: { value: number; max?
     <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-3">
       <div
         className={cx(
-          'h-full rounded-full',
+          'meter-fill h-full rounded-full',
           tone === 'accent' && 'bg-s1',
           tone === 'bad' && 'bg-bad',
           tone === 'warn' && 'bg-s4',
