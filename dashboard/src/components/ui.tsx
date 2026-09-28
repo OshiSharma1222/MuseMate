@@ -365,6 +365,3 @@ export function Td({ children, className, align = 'left' }: { children?: ReactNo
     </td>
   )
 }
-
-/** Old name, until every page has moved to ScrollArea. */
-export const ScrollX = ScrollArea

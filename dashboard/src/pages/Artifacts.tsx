@@ -3,8 +3,8 @@ import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { ArtifactGlyph } from '../components/bits'
 import { SortTh, useSort } from '../components/table'
-import { Badge, Button, Card, Empty, Meter, Mono, PageHeader, ScrollX, SearchInput, Segmented, Select, Td, cx } from '../components/ui'
-import { GALLERIES, GALLERY_BY_ID } from '../data/catalog'
+import { Badge, Button, Card, Empty, Meter, Mono, PageHeader, ScrollArea, SearchInput, Segmented, Select, Td, cx } from '../components/ui'
+import { GALLERIES } from '../data/catalog'
 import { exportArtifacts } from '../data/exports'
 import { artifactStats, type ArtifactStat } from '../data/selectors'
 import { getArtifacts, isEdited, useVersion } from '../data/store'
@@ -12,7 +12,7 @@ import type { Artifact, GalleryId } from '../data/types'
 import { fmtInt, fmtPct, fmtSec } from '../lib/format'
 import { useRange } from '../lib/range'
 
-type SortKey = 'name' | 'gallery' | 'visitors' | 'queries' | 'dwell' | 'skip' | 'unanswered'
+type SortKey = 'name' | 'visitors' | 'queries' | 'dwell' | 'skip' | 'unanswered'
 type StatusFilter = 'all' | 'review' | 'edited'
 
 const EMPTY_STAT: ArtifactStat = {
@@ -30,10 +30,112 @@ const EMPTY_STAT: ArtifactStat = {
   reach: 0,
 }
 
+type Sorter = ReturnType<typeof useSort<SortKey>>
+
+function ArtifactTable({
+  rows,
+  stats,
+  sort,
+  maxVisitors,
+}: {
+  rows: Artifact[]
+  stats: Map<string, ArtifactStat>
+  sort: Sorter
+  maxVisitors: number
+}) {
+  const navigate = useNavigate()
+  return (
+    <table className="w-full min-w-[820px] table-fixed border-collapse text-[13.5px]">
+      {/* Fixed widths keep the columns lined up from one gallery to the next. */}
+      <colgroup>
+        <col />
+        <col className="w-[170px]" />
+        <col className="w-[110px]" />
+        <col className="w-[110px]" />
+        <col className="w-[100px]" />
+        <col className="w-[120px]" />
+      </colgroup>
+      <thead>
+        <tr>
+          <SortTh k="name" sort={sort} firstDir="asc">
+            Artifact
+          </SortTh>
+          <SortTh k="visitors" sort={sort}>
+            Visitors
+          </SortTh>
+          <SortTh k="queries" sort={sort} align="right">
+            Questions
+          </SortTh>
+          <SortTh k="dwell" sort={sort} align="right">
+            Avg dwell
+          </SortTh>
+          <SortTh k="skip" sort={sort} align="right">
+            Skipped
+          </SortTh>
+          <SortTh k="unanswered" sort={sort} align="right">
+            No answer
+          </SortTh>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((a) => {
+          const s = stats.get(a.id) ?? EMPTY_STAT
+          return (
+            <tr key={a.id} onClick={() => navigate(`/artifacts/${a.id}`)} className="cursor-pointer transition-colors hover:bg-surface-2">
+              <Td>
+                <div className="flex min-w-0 items-center gap-3">
+                  <ArtifactGlyph kind={a.kind} size={34} />
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className="truncate font-medium text-ink">{a.name}</span>
+                      {!a.verified && (
+                        <Badge tone="warn" className="shrink-0">
+                          <TriangleAlert size={11} strokeWidth={2.4} />
+                          Review
+                        </Badge>
+                      )}
+                      {isEdited(a.id) && (
+                        <Badge tone="accent" className="shrink-0">
+                          <PencilLine size={11} strokeWidth={2.4} />
+                          Edited
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="flex min-w-0 items-center gap-2 text-[12px] whitespace-nowrap text-ink-3">
+                      <Mono className="text-[11.5px]">{a.accession}</Mono>
+                      <span>·</span>
+                      <span className="truncate">{a.period}</span>
+                    </div>
+                  </div>
+                </div>
+              </Td>
+              <Td>
+                <div className="flex items-center gap-2.5">
+                  <span className="w-9 text-right text-ink tnum">{fmtInt(s.visitors)}</span>
+                  <div className="w-16">
+                    <Meter value={s.visitors} max={maxVisitors} />
+                  </div>
+                </div>
+              </Td>
+              <Td align="right">{fmtInt(s.queries)}</Td>
+              <Td align="right">{s.taps ? fmtSec(s.avgDwellSec) : '–'}</Td>
+              <Td align="right">
+                <span className={cx(s.skipRate > 0.36 && 'font-medium text-bad')}>{s.taps ? fmtPct(s.skipRate) : '–'}</span>
+              </Td>
+              <Td align="right">
+                <span className={cx(s.unansweredRate > 0.3 && 'font-medium text-bad')}>{s.queries ? fmtPct(s.unansweredRate) : '–'}</span>
+              </Td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}
+
 export default function Artifacts() {
   const v = useVersion()
   const { range } = useRange()
-  const navigate = useNavigate()
   const [q, setQ] = useState('')
   const [gallery, setGallery] = useState<GalleryId | 'all'>('all')
   const [status, setStatus] = useState<StatusFilter>('all')
@@ -59,8 +161,6 @@ export default function Artifacts() {
       switch (k) {
         case 'name':
           return a.name
-        case 'gallery':
-          return GALLERY_BY_ID[a.gallery].room
         case 'visitors':
           return s.visitors
         case 'queries':
@@ -75,6 +175,9 @@ export default function Artifacts() {
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q, gallery, status, sort.key, sort.dir, v, range.from])
+
+  // One container per gallery, in floor-plan order; the sort applies within each.
+  const rooms = GALLERIES.map((g) => ({ g, list: rows.filter((a) => a.gallery === g.id) })).filter((r) => r.list.length)
 
   return (
     <>
@@ -117,103 +220,35 @@ export default function Artifacts() {
         <span className="ml-auto text-[12.5px] text-ink-3">Engagement for {range.label.toLowerCase()}</span>
       </div>
 
-      <Card className="overflow-hidden">
-        <ScrollX>
-          <table className="w-full min-w-[780px] border-collapse text-[13.5px]">
-            <thead>
-              <tr>
-                <SortTh k="name" sort={sort} firstDir="asc">
-                  Artifact
-                </SortTh>
-                <SortTh k="gallery" sort={sort} firstDir="asc">
-                  Gallery
-                </SortTh>
-                <SortTh k="visitors" sort={sort}>
-                  Visitors
-                </SortTh>
-                <SortTh k="queries" sort={sort} align="right">
-                  Questions
-                </SortTh>
-                <SortTh k="dwell" sort={sort} align="right">
-                  Avg dwell
-                </SortTh>
-                <SortTh k="skip" sort={sort} align="right">
-                  Skipped
-                </SortTh>
-                <SortTh k="unanswered" sort={sort} align="right">
-                  No answer
-                </SortTh>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((a) => {
-                const s = stats.get(a.id) ?? EMPTY_STAT
-                const g = GALLERY_BY_ID[a.gallery]
-                return (
-                  <tr
-                    key={a.id}
-                    onClick={() => navigate(`/artifacts/${a.id}`)}
-                    className="cursor-pointer transition-colors hover:bg-surface-2"
-                  >
-                    <Td>
-                      <div className="flex max-w-[230px] items-center gap-3 2xl:max-w-[360px]">
-                        <ArtifactGlyph kind={a.kind} size={34} />
-                        <div className="min-w-0">
-                          <div className="flex items-center gap-1.5">
-                            <span className="truncate font-medium text-ink">{a.name}</span>
-                            {!a.verified && (
-                              <Badge tone="warn" className="shrink-0">
-                                <TriangleAlert size={11} strokeWidth={2.4} />
-                                Review
-                              </Badge>
-                            )}
-                            {isEdited(a.id) && (
-                              <Badge tone="accent" className="shrink-0">
-                                <PencilLine size={11} strokeWidth={2.4} />
-                                Edited
-                              </Badge>
-                            )}
-                          </div>
-                          <div className="flex min-w-0 items-center gap-2 text-[12px] whitespace-nowrap text-ink-3">
-                            <Mono className="text-[11.5px]">{a.accession}</Mono>
-                            <span>·</span>
-                            <span className="truncate">{a.period}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </Td>
-                    <Td>
-                      <div className="flex items-center gap-2">
-                        <Mono className="shrink-0 rounded border border-line px-1 text-[11px] text-ink-2">{g.room}</Mono>
-                        <span className="leading-snug text-ink-2">{g.name}</span>
-                      </div>
-                    </Td>
-                    <Td>
-                      <div className="flex items-center gap-2.5">
-                        <span className="w-9 text-right text-ink tnum">{fmtInt(s.visitors)}</span>
-                        <div className="hidden w-14 2xl:block">
-                          <Meter value={s.visitors} max={maxVisitors} />
-                        </div>
-                      </div>
-                    </Td>
-                    <Td align="right">{fmtInt(s.queries)}</Td>
-                    <Td align="right">{s.taps ? fmtSec(s.avgDwellSec) : '–'}</Td>
-                    <Td align="right">
-                      <span className={cx(s.skipRate > 0.36 && 'font-medium text-bad')}>{s.taps ? fmtPct(s.skipRate) : '–'}</span>
-                    </Td>
-                    <Td align="right">
-                      <span className={cx(s.unansweredRate > 0.3 && 'font-medium text-bad')}>
-                        {s.queries ? fmtPct(s.unansweredRate) : '–'}
-                      </span>
-                    </Td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-          {!rows.length && <Empty title="No artifacts match">Try a different search or gallery.</Empty>}
-        </ScrollX>
-      </Card>
+      {!rows.length ? (
+        <Card>
+          <Empty title="No artifacts match">Try a different search or gallery.</Empty>
+        </Card>
+      ) : (
+        <div className="space-y-6">
+          {rooms.map(({ g, list }) => {
+            const visitors = list.reduce((n, a) => n + (stats.get(a.id)?.visitors ?? 0), 0)
+            const review = list.filter((a) => !a.verified).length
+            return (
+              <Card key={g.id} className="overflow-hidden">
+                <header className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-5 pt-4 pb-3">
+                  <h2 className="flex items-baseline gap-2.5">
+                    <Mono className="text-[12px] text-ink-3">{g.room}</Mono>
+                    <span className="font-serif text-[24px] leading-none text-ink">{g.name}</span>
+                  </h2>
+                  <span className="text-[12.5px] text-ink-3 tnum">
+                    {list.length} {list.length === 1 ? 'artifact' : 'artifacts'} · {fmtInt(visitors)} visits
+                    {review > 0 && <span className="text-warn"> · {review} to review</span>}
+                  </span>
+                </header>
+                <ScrollArea maxHeight="min(520px, 64vh)" className="border-t border-line">
+                  <ArtifactTable rows={list} stats={stats} sort={sort} maxVisitors={maxVisitors} />
+                </ScrollArea>
+              </Card>
+            )
+          })}
+        </div>
+      )}
     </>
   )
 }
