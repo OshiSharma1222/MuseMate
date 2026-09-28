@@ -31,7 +31,7 @@ export function Stars({ rating }: { rating: number | null }) {
           key={i}
           size={12}
           strokeWidth={0}
-          className={i <= rating ? (rating <= 2 ? 'fill-bad' : 'fill-s4') : 'fill-surface-3'}
+          className={i <= rating ? (rating <= 2 ? 'fill-bad' : 'fill-accent') : 'fill-surface-3'}
         />
       ))}
     </span>
