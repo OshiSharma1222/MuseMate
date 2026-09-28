@@ -224,16 +224,21 @@ const FOOTER_LINKS: { heading: string; links: [string, string][] }[] = [
   { heading: 'Act on it', links: [['/pain-points', 'Pain points'], ['/reports', 'Reports']] },
 ]
 
+/**
+ * An opaque paper band across the whole window. The sidebar runs on down
+ * over it, so the band reads as sitting behind the sidebar, while the
+ * footer's own content stays in line with the page content.
+ */
 function Footer() {
   return (
-    <footer className="no-print border-t border-line bg-surface/85 backdrop-blur-md">
-      <div className="mx-auto grid max-w-[1320px] gap-8 px-4 pt-10 pb-6 sm:px-6 md:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))] lg:px-8">
-        <div className="max-w-sm">
-          <div className="font-serif text-[28px] leading-none text-ink">MuseMate</div>
-          <p className="mt-2 text-[13px] text-ink-2">
+    <footer className="no-print border-t border-line-strong bg-surface-3 lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:pl-[248px]">
+      <div className="mx-auto grid max-w-[1320px] gap-8 px-4 pt-10 pb-8 sm:px-6 md:grid-cols-[minmax(0,1.6fr)_repeat(3,minmax(0,1fr))] lg:px-8">
+        <div className="max-w-md">
+          <Brand />
+          <p className="mt-4 text-[13.5px] text-ink-2">
             {MUSEUM.name}, {MUSEUM.city}. Open {MUSEUM.opensAt}:00 to {MUSEUM.closesAt}:00, closed on Mondays.
           </p>
-          <p className="mt-3 text-[12.5px] text-ink-3">
+          <p className="mt-3 text-[12.5px] leading-relaxed text-ink-3">
             Visitors appear only as anonymous visit IDs tied to a handheld, never by name. Everything here runs on the museum&apos;s
             own edge server; nothing leaves the building.
           </p>
@@ -244,7 +249,7 @@ function Footer() {
             <ul className="space-y-1.5">
               {col.links.map(([to, label]) => (
                 <li key={to}>
-                  <Link to={to} className="text-[13.5px] text-ink-2 hover:text-accent">
+                  <Link to={to} className="text-[13.5px] text-ink-2 transition-colors hover:text-ink hover:underline hover:underline-offset-4">
                     {label}
                   </Link>
                 </li>
@@ -253,14 +258,16 @@ function Footer() {
           </nav>
         ))}
       </div>
-      <div className="mx-auto flex max-w-[1320px] flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-line px-4 py-4 text-[12px] text-ink-3 sm:px-6 lg:px-8">
-        <span>SIH 2026 · PS 26214 · Team HackTuah</span>
-        <span>
-          Gallery photos from Wikimedia Commons,{' '}
-          <a href="/images/CREDITS.md" target="_blank" rel="noreferrer" className="underline decoration-line-strong underline-offset-2 hover:text-accent">
-            see credits
-          </a>
-        </span>
+      <div className="border-t border-line">
+        <div className="mx-auto flex max-w-[1320px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-4 text-[12px] text-ink-3 sm:px-6 lg:px-8">
+          <span>SIH 2026 · PS 26214 · Team HackTuah</span>
+          <span>
+            Gallery photos from Wikimedia Commons,{' '}
+            <a href="/images/CREDITS.md" target="_blank" rel="noreferrer" className="underline decoration-line-strong underline-offset-2 hover:text-ink">
+              see credits
+            </a>
+          </span>
+        </div>
       </div>
     </footer>
   )
@@ -275,9 +282,9 @@ export function Layout({ children }: { children?: ReactNode }) {
   }, [location.pathname])
 
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-[248px_1fr] print:block">
+    <div className="min-h-screen lg:grid lg:grid-cols-[248px_1fr] lg:grid-rows-[1fr_auto] print:block">
       <Backdrop />
-      <aside className="no-print sticky top-0 hidden h-screen border-r border-line lg:block">
+      <aside className="sidebar no-print sticky top-0 z-20 hidden h-screen border-r border-line bg-page lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:block">
         <Sidebar />
       </aside>
 
@@ -297,7 +304,7 @@ export function Layout({ children }: { children?: ReactNode }) {
         </div>
       )}
 
-      <div className="flex min-h-screen min-w-0 flex-col">
+      <div className="flex min-h-screen min-w-0 flex-col lg:col-start-2 lg:row-start-1">
         <header className="no-print sticky top-0 z-30 border-b border-line bg-page/85 backdrop-blur-md">
           <div className="mx-auto flex h-14 max-w-[1320px] items-center gap-3 px-4 sm:px-6 lg:px-8">
             <button
@@ -320,8 +327,8 @@ export function Layout({ children }: { children?: ReactNode }) {
           </div>
         </header>
         <main className="mx-auto w-full max-w-[1320px] flex-1 px-4 py-7 sm:px-6 lg:px-8 lg:py-9 print:max-w-none print:p-0">{children ?? <Outlet />}</main>
-        <Footer />
       </div>
+      <Footer />
     </div>
   )
 }
