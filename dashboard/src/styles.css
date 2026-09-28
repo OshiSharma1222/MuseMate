@@ -234,8 +234,9 @@
 }
 
 /*
-  Scenery. Gallery photos sit behind the app and in page banners, drifting
-  slowly. The motion stops for prefers-reduced-motion.
+  Scenery and motion. Gallery photos sit behind the app and in page banners,
+  and the overview hero drifts through the galleries. All of it stops for
+  prefers-reduced-motion.
 */
 @keyframes rise {
   from {
@@ -256,6 +257,26 @@
   }
   to {
     transform: scale(1.14) translate(-1.5%, -1%);
+  }
+}
+
+@keyframes drift-up {
+  from {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(14px, -50%);
+  }
+  80% {
+    opacity: 1;
+  }
+  to {
+    transform: translate(-6px, -100%);
+    opacity: 0;
   }
 }
 
@@ -286,8 +307,34 @@
   animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s backwards;
 }
 
+.banner-text-late {
+  animation-delay: 0.35s;
+}
+
 .kenburns {
   animation: ken-burns 22s ease-in-out infinite alternate;
+}
+
+/* A full-height column with the speck at its foot, so translating the column
+   by -100% carries the speck from the bottom of the hero to the top. */
+.mote {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  animation: drift-up linear infinite;
+  will-change: transform, opacity;
+}
+.mote::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: #ffe2a8;
+  box-shadow: 0 0 6px 1px rgb(255 214 140 / 0.7);
+  opacity: var(--glow, 0.6);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -298,6 +345,9 @@
   .banner-text,
   .kenburns {
     animation: none;
+  }
+  .mote {
+    display: none;
   }
 }
 

@@ -2,7 +2,8 @@ import { ArrowRight, Radio } from 'lucide-react'
 import { Link } from 'react-router'
 import { ArtifactLink, LiveFeed } from '../components/bits'
 import { ChartFrame, Columns, LegendKey, TrendChart, useThemeColors } from '../components/charts'
-import { Badge, Card, CardHeader, Delta, Empty, Meter, PageHeader, Stat, cx } from '../components/ui'
+import { CountUp, HeroBanner } from '../components/scenery'
+import { Badge, Card, CardHeader, Delta, Empty, Meter, Stat, cx } from '../components/ui'
 import { MUSEUM } from '../data/catalog'
 import {
   artifactStats,
@@ -13,11 +14,36 @@ import {
   queriesPerVisitorDist,
   summary,
 } from '../data/selectors'
-import { getResolved, isLive, useVersion } from '../data/store'
+import { getActiveCount, getResolved, isLive, useVersion } from '../data/store'
 import { change, fmt1, fmtDate, fmtDateShort, fmtHour, fmtInt, fmtMin, fmtPct } from '../lib/format'
 import { useRange } from '../lib/range'
 
 const SEVERITY_TONE = { high: 'bad', medium: 'warn', low: 'neutral' } as const
+
+function greeting() {
+  const h = new Date().getHours()
+  return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'
+}
+
+/** Handhelds out on the floor right now, over the hero photo. */
+function FloorNow() {
+  const inside = Math.min(MUSEUM.devices, getActiveCount())
+  const live = isLive()
+  return (
+    <div className="min-w-[200px] rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur-md">
+      <div className="flex items-center gap-2 text-[12px] font-medium text-white/75">
+        <span className={cx('relative size-2 rounded-full', live ? 'live-dot bg-[#5fd873] text-[#5fd873]' : 'bg-white/40')} />
+        {live ? 'On the floor now' : 'Live feed paused'}
+      </div>
+      <div className="mt-2 text-[40px] leading-none font-semibold tracking-[-0.02em] tnum">
+        <CountUp text={String(inside)} />
+      </div>
+      <div className="mt-1.5 text-[12px] text-white/65">
+        of {MUSEUM.devices} handhelds out · open {MUSEUM.opensAt}:00–{MUSEUM.closesAt}:00
+      </div>
+    </div>
+  )
+}
 
 export default function Overview() {
   const v = useVersion()
@@ -40,9 +66,10 @@ export default function Overview() {
 
   return (
     <>
-      <PageHeader
-        eyebrow={`${MUSEUM.name} · ${range.label}`}
-        title="Overview"
+      <HeroBanner
+        eyebrow={`Overview · ${MUSEUM.name} · ${range.label}`}
+        title={greeting()}
+        aside={<FloorNow />}
         description={
           empty ? (
             closedToday ? (
