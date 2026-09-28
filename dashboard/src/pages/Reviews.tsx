@@ -1,7 +1,7 @@
 import { Star } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router'
-import { Badge, Card, CardHeader, Empty, LangTag, Meter, Mono, PageHeader, Segmented, Select, cx } from '../components/ui'
+import { Badge, Card, CardHeader, Empty, LangTag, Meter, Mono, PageHeader, ScrollArea, Segmented, Select, cx } from '../components/ui'
 import { MODE_NAME, REVIEW_TAGS } from '../data/catalog'
 import { languages, reviewStats } from '../data/selectors'
 import { useVersion } from '../data/store'
@@ -46,7 +46,7 @@ export default function Reviews() {
             <div className="sm:pr-2">
               <div className="text-[13px] text-ink-2">Average rating</div>
               <div className="mt-1 flex items-baseline gap-1.5">
-                <span className="text-[48px] leading-none font-semibold tracking-[-0.03em] text-ink">{r.avg ? fmt1(r.avg) : '–'}</span>
+                <span className="font-serif text-[60px] leading-none text-ink tnum">{r.avg ? fmt1(r.avg) : '–'}</span>
                 <span className="text-[15px] text-ink-3">/ 5</span>
               </div>
               <div className="mt-2">
@@ -75,7 +75,7 @@ export default function Reviews() {
             {r.byMode.map((m) => (
               <div key={m.mode} className="border-r border-line px-4 py-3 last:border-r-0">
                 <div className="text-[12px] text-ink-3">{m.name}</div>
-                <div className="mt-0.5 text-[16px] font-semibold text-ink">{m.avg ? fmt1(m.avg) : '–'}</div>
+                <div className="mt-0.5 font-serif text-[22px] leading-tight text-ink">{m.avg ? fmt1(m.avg) : '–'}</div>
               </div>
             ))}
           </div>
@@ -137,7 +137,7 @@ export default function Reviews() {
         <Card className="overflow-hidden">
           <div className="flex flex-wrap items-center justify-between gap-3 px-5 pt-4 pb-3">
             <div>
-              <h2 className="text-[14px] font-semibold text-ink">Comments</h2>
+              <h2 className="font-serif text-[22px] leading-[1.15] text-ink">Comments</h2>
               <p className="text-[13px] text-ink-3">{fmtInt(list.length)} with a spoken comment</p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
@@ -160,35 +160,37 @@ export default function Reviews() {
               />
             </div>
           </div>
-          <ul className="divide-y divide-line border-t border-line">
-            {list.slice(0, limit).map((s) => (
-              <li key={s.id} className="px-5 py-4">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <Stars rating={s.rating} />
-                  <span className="flex items-center gap-2 text-[12px] text-ink-3">
-                    <LangTag lang={s.lang} />
-                    <Link to={`/visitors/${s.id}`} className="hover:text-accent">
-                      <Mono className="text-[12px]">{s.id}</Mono>
-                    </Link>
-                    <span>·</span>
-                    <span>{MODE_NAME[s.mode]} mode</span>
-                    <span>·</span>
-                    <span>{fmtDate(s.endedAt ?? s.startedAt)}</span>
-                  </span>
-                </div>
-                <p className="mt-2 font-serif text-[19px] leading-snug text-ink">“{s.review!.text}”</p>
-                {s.review!.text !== s.review!.textEn && <p className="mt-0.5 text-[12.5px] text-ink-3">{s.review!.textEn}</p>}
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {s.review!.tags.map((t) => (
-                    <Badge key={t} tone={REVIEW_TAGS[t].positive ? 'good' : 'bad'}>
-                      {REVIEW_TAGS[t].label}
-                    </Badge>
-                  ))}
-                </div>
-              </li>
-            ))}
-            {!list.length && <Empty title="No comments match" />}
-          </ul>
+          <ScrollArea maxHeight="min(640px, 72vh)" className="border-t border-line">
+            <ul className="divide-y divide-line">
+              {list.slice(0, limit).map((s) => (
+                <li key={s.id} className="px-5 py-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <Stars rating={s.rating} />
+                    <span className="flex items-center gap-2 text-[12px] text-ink-3">
+                      <LangTag lang={s.lang} />
+                      <Link to={`/visitors/${s.id}`} className="hover:text-accent">
+                        <Mono className="text-[12px]">{s.id}</Mono>
+                      </Link>
+                      <span>·</span>
+                      <span>{MODE_NAME[s.mode]} mode</span>
+                      <span>·</span>
+                      <span>{fmtDate(s.endedAt ?? s.startedAt)}</span>
+                    </span>
+                  </div>
+                  <p className="mt-2 font-serif text-[19px] leading-snug text-ink">“{s.review!.text}”</p>
+                  {s.review!.text !== s.review!.textEn && <p className="mt-0.5 text-[12.5px] text-ink-3">{s.review!.textEn}</p>}
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {s.review!.tags.map((t) => (
+                      <Badge key={t} tone={REVIEW_TAGS[t].positive ? 'good' : 'bad'}>
+                        {REVIEW_TAGS[t].label}
+                      </Badge>
+                    ))}
+                  </div>
+                </li>
+              ))}
+              {!list.length && <Empty title="No comments match" />}
+            </ul>
+          </ScrollArea>
           {list.length > limit && (
             <div className="border-t border-line px-5 py-3 text-center">
               <button onClick={() => setLimit(limit + 30)} className="text-[12.5px] font-medium text-accent hover:underline">
