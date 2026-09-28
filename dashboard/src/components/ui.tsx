@@ -262,7 +262,7 @@ export function Meter({ value, max = 1, tone = 'accent' }: { value: number; max?
           'meter-fill h-full rounded-full',
           tone === 'accent' && 'bg-s1',
           tone === 'bad' && 'bg-bad',
-          tone === 'warn' && 'bg-s4',
+          tone === 'warn' && 'bg-s2',
           tone === 'muted' && 'bg-ink-3',
         )}
         style={{ width: `${pct}%` }}

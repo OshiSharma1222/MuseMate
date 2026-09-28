@@ -9,9 +9,11 @@
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 /*
-  Paper and ink. Every colour in the app comes from these tokens so the dark
-  theme is one block, not a second stylesheet. Series colours are validated
-  for colour-blind separation against the surface they sit on.
+  Paper and ink, with colours taken from the collection: Chola bronze for
+  the accent, then vermilion, lapis and madder rose (warm takes on the
+  Okabe-Ito hues, so series stay apart for colour-blind readers). Every
+  colour in the app comes from these tokens so the dark theme is one block,
+  not a second stylesheet.
 */
 :root {
   color-scheme: light;
@@ -24,13 +26,13 @@
   --ink-3: #8a847a;
   --line: #e7e2d7;
   --line-strong: #d5cdbd;
-  --accent: #00786c;
-  --accent-ink: #005a51;
-  --accent-wash: rgb(0 140 127 / 0.09);
-  --series-1: #008c7f;
-  --series-2: #c4532b;
-  --series-3: #4a4fb0;
-  --series-4: #c99417;
+  --accent: #95661a;
+  --accent-ink: #74500f;
+  --accent-wash: rgb(168 116 26 / 0.12);
+  --series-1: #a8741a;
+  --series-2: #c0601f;
+  --series-3: #2f5d9e;
+  --series-4: #a5587f;
   --good: #1f7a35;
   --good-wash: rgb(31 122 53 / 0.1);
   --warn: #9a6200;
@@ -39,12 +41,12 @@
   --bad-wash: rgb(208 59 59 / 0.1);
   --grid: #ebe6db;
   --axis: #cfc7b7;
-  --heat-0: #f1eee6;
-  --heat-1: #cde7e1;
-  --heat-2: #8fcbc0;
-  --heat-3: #3fa596;
-  --heat-4: #007a6e;
-  --heat-5: #0b4f48;
+  --heat-0: #f1ece2;
+  --heat-1: #efdcb4;
+  --heat-2: #e0bb74;
+  --heat-3: #c7953f;
+  --heat-4: #9a6a1c;
+  --heat-5: #5f400f;
   --shadow: 0 1px 2px rgb(29 27 24 / 0.04), 0 4px 16px -8px rgb(29 27 24 / 0.08);
 }
 
@@ -60,13 +62,13 @@
     --ink-3: #857f74;
     --line: #2d2a25;
     --line-strong: #3b3730;
-    --accent: #3cc0b0;
-    --accent-ink: #6fd6c8;
-    --accent-wash: rgb(60 192 176 / 0.12);
-    --series-1: #16a293;
-    --series-2: #dd6a3c;
-    --series-3: #7d82e6;
-    --series-4: #b0821f;
+    --accent: #dcaa52;
+    --accent-ink: #ecc47a;
+    --accent-wash: rgb(220 170 82 / 0.14);
+    --series-1: #d29c40;
+    --series-2: #e8803f;
+    --series-3: #7d9be0;
+    --series-4: #d584ad;
     --good: #4cc35e;
     --good-wash: rgb(76 195 94 / 0.12);
     --warn: #f0b43c;
@@ -76,11 +78,11 @@
     --grid: #2a2723;
     --axis: #3b3730;
     --heat-0: #23211d;
-    --heat-1: #173a36;
-    --heat-2: #155a52;
-    --heat-3: #127d71;
-    --heat-4: #1fa596;
-    --heat-5: #6fd6c8;
+    --heat-1: #3a2f1c;
+    --heat-2: #5c4520;
+    --heat-3: #86622a;
+    --heat-4: #b98a3a;
+    --heat-5: #ecc47a;
     --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
   }
 }
@@ -96,13 +98,13 @@
   --ink-3: #857f74;
   --line: #2d2a25;
   --line-strong: #3b3730;
-  --accent: #3cc0b0;
-  --accent-ink: #6fd6c8;
-  --accent-wash: rgb(60 192 176 / 0.12);
-  --series-1: #16a293;
-  --series-2: #dd6a3c;
-  --series-3: #7d82e6;
-  --series-4: #b0821f;
+  --accent: #dcaa52;
+  --accent-ink: #ecc47a;
+  --accent-wash: rgb(220 170 82 / 0.14);
+  --series-1: #d29c40;
+  --series-2: #e8803f;
+  --series-3: #7d9be0;
+  --series-4: #d584ad;
   --good: #4cc35e;
   --good-wash: rgb(76 195 94 / 0.12);
   --warn: #f0b43c;
@@ -112,11 +114,11 @@
   --grid: #2a2723;
   --axis: #3b3730;
   --heat-0: #23211d;
-  --heat-1: #173a36;
-  --heat-2: #155a52;
-  --heat-3: #127d71;
-  --heat-4: #1fa596;
-  --heat-5: #6fd6c8;
+  --heat-1: #3a2f1c;
+  --heat-2: #5c4520;
+  --heat-3: #86622a;
+  --heat-4: #b98a3a;
+  --heat-5: #ecc47a;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
 }
 
