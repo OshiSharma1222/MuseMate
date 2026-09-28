@@ -2,7 +2,7 @@ import { Download, FileSpreadsheet, Star } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { SortTh, useSort } from '../components/table'
-import { Badge, Button, Card, Empty, LangTag, Mono, PageHeader, SearchInput, Select, Td, Toggle, cx } from '../components/ui'
+import { Badge, Button, Card, Empty, LangTag, Mono, PageHeader, ScrollX, SearchInput, Select, Td, Toggle, cx } from '../components/ui'
 import { LANGS, LANG_NAME, MODES, MODE_NAME } from '../data/catalog'
 import { exportQueries, exportVisitors } from '../data/exports'
 import { durationMin, queriesOf, sessionsIn } from '../data/selectors'
@@ -141,8 +141,8 @@ export default function Visitors() {
       </div>
 
       <Card className="overflow-hidden">
-        <div className="overflow-x-auto scroll-thin">
-          <table className="w-full min-w-[980px] border-collapse text-[13.5px]">
+        <ScrollX>
+          <table className="w-full min-w-[800px] border-collapse text-[13.5px]">
             <thead>
               <tr>
                 <th className="sticky top-0 border-b border-line bg-surface px-3 pl-5 text-left text-[11px] font-semibold tracking-[0.06em] text-ink-3 uppercase">
@@ -179,7 +179,7 @@ export default function Visitors() {
                   <tr key={s.id} onClick={() => navigate(`/visitors/${s.id}`)} className="cursor-pointer hover:bg-surface-2">
                     <Td>
                       <div className="flex items-center gap-2.5">
-                        <Mono className="font-medium text-ink">{s.id}</Mono>
+                        <Mono className="font-medium whitespace-nowrap text-ink">{s.id}</Mono>
                         {s.endedAt === null ? (
                           <Badge tone="good">
                             <span className="relative size-1.5 rounded-full bg-good text-good live-dot" />
@@ -199,11 +199,12 @@ export default function Visitors() {
                       <span className={cx(s.endedAt === null && 'text-ink-3')}>{fmtMin(durationMin(s))}</span>
                     </Td>
                     <Td>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2.5">
                         <LangTag lang={s.lang} />
-                        <span className="text-ink-2">{LANG_NAME[s.lang]}</span>
-                        <span className="text-ink-3">·</span>
-                        <span className="text-ink-2">{MODE_NAME[s.mode]}</span>
+                        <div className="leading-tight">
+                          <div className="text-ink-2">{LANG_NAME[s.lang]}</div>
+                          <div className="mt-0.5 text-[12px] text-ink-3">{MODE_NAME[s.mode]}</div>
+                        </div>
                       </div>
                     </Td>
                     <Td align="right">{s.stops.length}</Td>
@@ -218,7 +219,7 @@ export default function Visitors() {
             </tbody>
           </table>
           {!rows.length && <Empty title="No visits match">Clear a filter or pick a longer date range.</Empty>}
-        </div>
+        </ScrollX>
         {rows.length > limit && (
           <div className="flex items-center justify-between border-t border-line px-5 py-3 text-[12.5px] text-ink-3">
             <span className="tnum">

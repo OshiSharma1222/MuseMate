@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { ArtifactGlyph } from '../components/bits'
 import { SortTh, useSort } from '../components/table'
-import { Badge, Button, Card, Empty, Meter, Mono, PageHeader, SearchInput, Segmented, Select, Td, cx } from '../components/ui'
+import { Badge, Button, Card, Empty, Meter, Mono, PageHeader, ScrollX, SearchInput, Segmented, Select, Td, cx } from '../components/ui'
 import { GALLERIES, GALLERY_BY_ID } from '../data/catalog'
 import { exportArtifacts } from '../data/exports'
 import { artifactStats, type ArtifactStat } from '../data/selectors'
@@ -118,8 +118,8 @@ export default function Artifacts() {
       </div>
 
       <Card className="overflow-hidden">
-        <div className="overflow-x-auto scroll-thin">
-          <table className="w-full min-w-[960px] border-collapse text-[13.5px]">
+        <ScrollX>
+          <table className="w-full min-w-[780px] border-collapse text-[13.5px]">
             <thead>
               <tr>
                 <SortTh k="name" sort={sort} firstDir="asc">
@@ -141,7 +141,7 @@ export default function Artifacts() {
                   Skipped
                 </SortTh>
                 <SortTh k="unanswered" sort={sort} align="right">
-                  Unanswered
+                  No answer
                 </SortTh>
               </tr>
             </thead>
@@ -156,7 +156,7 @@ export default function Artifacts() {
                     className="cursor-pointer transition-colors hover:bg-surface-2"
                   >
                     <Td>
-                      <div className="flex max-w-[360px] items-center gap-3">
+                      <div className="flex max-w-[230px] items-center gap-3 2xl:max-w-[360px]">
                         <ArtifactGlyph kind={a.kind} size={34} />
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5">
@@ -183,15 +183,15 @@ export default function Artifacts() {
                       </div>
                     </Td>
                     <Td>
-                      <div className="flex items-center gap-2 whitespace-nowrap">
-                        <Mono className="rounded border border-line px-1 text-[11px] text-ink-2">{g.room}</Mono>
-                        <span className="text-ink-2">{g.name}</span>
+                      <div className="flex items-center gap-2">
+                        <Mono className="shrink-0 rounded border border-line px-1 text-[11px] text-ink-2">{g.room}</Mono>
+                        <span className="leading-snug text-ink-2">{g.name}</span>
                       </div>
                     </Td>
                     <Td>
                       <div className="flex items-center gap-2.5">
                         <span className="w-9 text-right text-ink tnum">{fmtInt(s.visitors)}</span>
-                        <div className="w-14">
+                        <div className="hidden w-14 2xl:block">
                           <Meter value={s.visitors} max={maxVisitors} />
                         </div>
                       </div>
@@ -212,7 +212,7 @@ export default function Artifacts() {
             </tbody>
           </table>
           {!rows.length && <Empty title="No artifacts match">Try a different search or gallery.</Empty>}
-        </div>
+        </ScrollX>
       </Card>
     </>
   )

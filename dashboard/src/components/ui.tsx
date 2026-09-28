@@ -1,5 +1,5 @@
 import { ArrowDownRight, ArrowUpRight, Minus, Search } from 'lucide-react'
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react'
+import { useEffect, useRef, useState, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from 'react'
 import { fmtPct } from '../lib/format'
 import { CountUp, PageBanner } from './scenery'
 
@@ -30,6 +30,42 @@ export function CardHeader({
       </div>
       {right && <div className="flex shrink-0 items-center gap-2">{right}</div>}
     </header>
+  )
+}
+
+/**
+ * A sideways-scrolling strip for wide tables. Fades on the cut edges show
+ * there is more to see, since the scrollbar of a long table sits far below
+ * the fold.
+ */
+export function ScrollX({ className, children }: { className?: string; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [more, setMore] = useState({ left: false, right: false })
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const update = () =>
+      setMore({ left: el.scrollLeft > 1, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 1 })
+    update()
+    el.addEventListener('scroll', update, { passive: true })
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    if (el.firstElementChild) ro.observe(el.firstElementChild)
+    return () => {
+      el.removeEventListener('scroll', update)
+      ro.disconnect()
+    }
+  }, [])
+
+  return (
+    <div className="relative">
+      <div ref={ref} className={cx('overflow-x-auto scroll-thin', className)}>
+        {children}
+      </div>
+      <div aria-hidden className={cx('scroll-fade left-0', more.left && 'on')} />
+      <div aria-hidden className={cx('scroll-fade right-0', more.right && 'on')} />
+    </div>
   )
 }
 

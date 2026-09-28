@@ -401,6 +401,28 @@
   animation: wiggle 0.5s ease-in-out;
 }
 
+/* Edge fades on a table that scrolls sideways, shown only while there is
+   more in that direction. */
+.scroll-fade {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  background-image: linear-gradient(var(--fade-dir), var(--surface) 10%, transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.scroll-fade.left-0 {
+  --fade-dir: 90deg;
+}
+.scroll-fade.right-0 {
+  --fade-dir: 270deg;
+}
+.scroll-fade.on {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .live-dot::after,
   .feed-enter,

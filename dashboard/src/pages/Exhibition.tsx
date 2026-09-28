@@ -1,7 +1,7 @@
 import { Wifi } from 'lucide-react'
 import { useState } from 'react'
 import { ChartFrame, Columns, HeatLegend, TrendChart, heatColor, useThemeColors } from '../components/charts'
-import { Badge, Card, CardHeader, Meter, Mono, PageHeader, Select, Stat, cx } from '../components/ui'
+import { Badge, Card, CardHeader, Meter, Mono, PageHeader, ScrollX, Select, Stat, cx } from '../components/ui'
 import { MUSEUM } from '../data/catalog'
 import { dayStart } from '../data/seed'
 import {
@@ -190,8 +190,8 @@ export default function Exhibition() {
 
         <Card>
           <CardHeader title="When visitors arrive" subtitle="Average arrivals per hour, last 30 days" right={<HeatLegend max={heat.max} format={(n) => fmt1(n)} />} />
-          <div className="overflow-x-auto px-5 pb-5 scroll-thin">
-            <div className="min-w-[480px]">
+          <ScrollX className="px-5 pb-5">
+            <div className="min-w-[360px]">
               <div className="grid grid-cols-[40px_repeat(8,minmax(0,1fr))] gap-[3px]">
                 <span />
                 {heat.hours.map((h) => (
@@ -229,19 +229,19 @@ export default function Exhibition() {
                 ))}
               </div>
             </div>
-          </div>
+          </ScrollX>
         </Card>
       </div>
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
         <Card className="overflow-hidden">
           <CardHeader title="Through the galleries" subtitle="Share of visitors who tapped at least one artifact in each room, in floor-plan order" />
-          <div className="overflow-x-auto scroll-thin">
-            <table className="w-full min-w-[620px] text-[13px]">
+          <ScrollX>
+            <table className="w-full min-w-[500px] text-[13px]">
               <thead>
                 <tr className="text-left text-[11px] font-semibold tracking-[0.06em] text-ink-3 uppercase">
                   <th className="border-y border-line px-3 py-2 whitespace-nowrap pl-5">Gallery</th>
-                  <th className="w-[36%] border-y border-line px-3 py-2">Reached</th>
+                  <th className="w-[30%] border-y border-line px-3 py-2">Reached</th>
                   <th className="border-y border-line px-3 py-2 whitespace-nowrap text-right">Avg dwell</th>
                   <th className="border-y border-line px-3 py-2 whitespace-nowrap pr-5 text-right">Answer time</th>
                 </tr>
@@ -253,8 +253,8 @@ export default function Exhibition() {
                     <tr key={g.id} className="border-b border-line last:border-b-0">
                       <td className="px-3 py-2.5 pl-5">
                         <div className="flex items-center gap-2">
-                          <Mono className="rounded border border-line px-1 text-[11px] text-ink-2">{g.room}</Mono>
-                          <span className="text-ink">{g.name}</span>
+                          <Mono className="shrink-0 rounded border border-line px-1 text-[11px] text-ink-2">{g.room}</Mono>
+                          <span className="leading-snug text-ink">{g.name}</span>
                         </div>
                       </td>
                       <td className="px-3 py-2.5">
@@ -280,38 +280,40 @@ export default function Exhibition() {
                 })}
               </tbody>
             </table>
-          </div>
+          </ScrollX>
         </Card>
 
         <Card className="overflow-hidden">
           <CardHeader title="By narration mode" subtitle="Chosen at the entry tag; switchable by voice" />
-          <table className="w-full text-[13px]">
-            <thead>
-              <tr className="text-left text-[11px] font-semibold tracking-[0.06em] text-ink-3 uppercase">
-                <th className="border-y border-line px-3 py-2 whitespace-nowrap pl-5">Mode</th>
-                <th className="border-y border-line px-3 py-2 whitespace-nowrap text-right">Visitors</th>
-                <th className="border-y border-line px-3 py-2 whitespace-nowrap text-right">Avg visit</th>
-                <th className="border-y border-line px-3 py-2 whitespace-nowrap pr-5 text-right">Questions each</th>
-              </tr>
-            </thead>
-            <tbody>
-              {modeRows.map((m, i) => (
-                <tr key={m.mode} className="border-b border-line last:border-b-0">
-                  <td className="px-3 py-2.5 pl-5">
-                    <span className="inline-flex items-center gap-2 text-ink">
-                      <span className="size-2.5 rounded-[3px]" style={{ background: c[`series-${i + 1}` as 'series-1'] }} />
-                      {m.name}
-                    </span>
-                  </td>
-                  <td className="px-3 py-2.5 text-right tnum">
-                    {fmtInt(m.visitors)} <span className="text-ink-3">· {fmtPct(m.share)}</span>
-                  </td>
-                  <td className="px-3 py-2.5 text-right text-ink-2 tnum">{m.avgMin ? fmtMin(m.avgMin) : '–'}</td>
-                  <td className="px-3 py-2.5 pr-5 text-right text-ink-2 tnum">{fmt1(m.qpv)}</td>
+          <ScrollX>
+            <table className="w-full text-[13px]">
+              <thead>
+                <tr className="text-left text-[11px] font-semibold tracking-[0.06em] text-ink-3 uppercase">
+                  <th className="border-y border-line px-3 py-2 whitespace-nowrap pl-5">Mode</th>
+                  <th className="border-y border-line px-3 py-2 whitespace-nowrap text-right">Visitors</th>
+                  <th className="border-y border-line px-3 py-2 whitespace-nowrap text-right">Avg visit</th>
+                  <th className="border-y border-line px-3 py-2 pr-5 text-right">Questions each</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {modeRows.map((m, i) => (
+                  <tr key={m.mode} className="border-b border-line last:border-b-0">
+                    <td className="px-3 py-2.5 pl-5">
+                      <span className="inline-flex items-center gap-2 text-ink">
+                        <span className="size-2.5 rounded-[3px]" style={{ background: c[`series-${i + 1}` as 'series-1'] }} />
+                        {m.name}
+                      </span>
+                    </td>
+                    <td className="px-3 py-2.5 text-right whitespace-nowrap tnum">
+                      {fmtInt(m.visitors)} <span className="text-ink-3">· {fmtPct(m.share)}</span>
+                    </td>
+                    <td className="px-3 py-2.5 text-right whitespace-nowrap text-ink-2 tnum">{m.avgMin ? fmtMin(m.avgMin) : '–'}</td>
+                    <td className="px-3 py-2.5 pr-5 text-right text-ink-2 tnum">{fmt1(m.qpv)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </ScrollX>
           {curious[0]?.qpv > 0 && (
             <p className="border-t border-line px-5 py-3 text-[12px] text-ink-3">
               {curious[0].name} mode visitors ask the most, {fmt1(curious[0].qpv)} questions each
