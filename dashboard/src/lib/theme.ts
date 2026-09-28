@@ -1,35 +1,29 @@
 import { useEffect, useState } from 'react'
 
-export type ThemePref = 'light' | 'dark' | 'system'
+export type Theme = 'light' | 'dark'
 
 const KEY = 'mm-theme'
 
-function apply(pref: ThemePref) {
-  const root = document.documentElement
-  if (pref === 'system') delete root.dataset.theme
-  else root.dataset.theme = pref
+/** Light unless this browser picked dark; the system setting is not followed. */
+function stored(): Theme {
+  try {
+    return localStorage.getItem(KEY) === 'dark' ? 'dark' : 'light'
+  } catch {
+    return 'light'
+  }
 }
 
 export function useTheme() {
-  const [pref, setPref] = useState<ThemePref>(() => {
-    try {
-      const v = localStorage.getItem(KEY)
-      if (v === 'light' || v === 'dark') return v
-    } catch {
-      // storage blocked; follow the system
-    }
-    return 'system'
-  })
+  const [theme, setTheme] = useState<Theme>(stored)
 
   useEffect(() => {
-    apply(pref)
+    document.documentElement.dataset.theme = theme
     try {
-      if (pref === 'system') localStorage.removeItem(KEY)
-      else localStorage.setItem(KEY, pref)
+      localStorage.setItem(KEY, theme)
     } catch {
       // not persisted
     }
-  }, [pref])
+  }, [theme])
 
-  return [pref, setPref] as const
+  return [theme, setTheme] as const
 }

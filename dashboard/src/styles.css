@@ -50,43 +50,6 @@
   --shadow: 0 1px 2px rgb(29 27 24 / 0.04), 0 4px 16px -8px rgb(29 27 24 / 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:where(:not([data-theme='light'])) {
-    color-scheme: dark;
-    --page: #141311;
-    --surface: #1c1a17;
-    --surface-2: #211f1b;
-    --surface-3: #292621;
-    --ink: #f2efe8;
-    --ink-2: #bdb7aa;
-    --ink-3: #857f74;
-    --line: #2d2a25;
-    --line-strong: #3b3730;
-    --accent: #dcaa52;
-    --accent-ink: #ecc47a;
-    --accent-wash: rgb(220 170 82 / 0.14);
-    --series-1: #d29c40;
-    --series-2: #e8803f;
-    --series-3: #7d9be0;
-    --series-4: #d584ad;
-    --good: #4cc35e;
-    --good-wash: rgb(76 195 94 / 0.12);
-    --warn: #f0b43c;
-    --warn-wash: rgb(240 180 60 / 0.12);
-    --bad: #f07470;
-    --bad-wash: rgb(240 116 112 / 0.12);
-    --grid: #2a2723;
-    --axis: #3b3730;
-    --heat-0: #23211d;
-    --heat-1: #3a2f1c;
-    --heat-2: #5c4520;
-    --heat-3: #86622a;
-    --heat-4: #b98a3a;
-    --heat-5: #ecc47a;
-    --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
-  }
-}
-
 :root[data-theme='dark'] {
   color-scheme: dark;
   --page: #141311;
@@ -401,6 +364,17 @@
   animation: wiggle 0.5s ease-in-out;
 }
 
+@keyframes spin-in {
+  from {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.4);
+  }
+}
+
+.theme-icon {
+  animation: spin-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
 /* Edge fades on a table that scrolls sideways, shown only while there is
    more in that direction. */
 .scroll-fade {
@@ -433,7 +407,8 @@
   .card-rise,
   .meter-fill,
   .chart-wipe,
-  .nav-link:hover .nav-icon {
+  .nav-link:hover .nav-icon,
+  .theme-icon {
     animation: none;
   }
   .mote {

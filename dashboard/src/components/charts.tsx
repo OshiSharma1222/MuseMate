@@ -35,12 +35,7 @@ export function useThemeColors() {
     const update = () => setColors(readColors())
     const mo = new MutationObserver(update)
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
-    const mq = matchMedia('(prefers-color-scheme: dark)')
-    mq.addEventListener('change', update)
-    return () => {
-      mo.disconnect()
-      mq.removeEventListener('change', update)
-    }
+    return () => mo.disconnect()
   }, [])
   return colors
 }

@@ -4,7 +4,6 @@ import {
   Landmark,
   LayoutDashboard,
   Menu,
-  Monitor,
   Moon,
   Star,
   Sun,
@@ -19,7 +18,7 @@ import { MUSEUM } from '../data/catalog'
 import { painPoints } from '../data/selectors'
 import { getActiveCount, getResolved, isLive, setLive, useVersion } from '../data/store'
 import { RANGE_OPTIONS, useRange, type RangeKey } from '../lib/range'
-import { useTheme, type ThemePref } from '../lib/theme'
+import { useTheme } from '../lib/theme'
 import { Backdrop } from './scenery'
 import { Meter, Segmented, cx } from './ui'
 
@@ -154,20 +153,22 @@ function ServerStatus() {
   )
 }
 
-function ThemeSwitch() {
-  const [pref, setPref] = useTheme()
+/** Light by default; one tap for the dark galleries. */
+function ThemeToggle() {
+  const [theme, setTheme] = useTheme()
+  const dark = theme === 'dark'
+  const label = dark ? 'Switch to light theme' : 'Switch to dark theme'
   return (
-    <Segmented<ThemePref>
-      size="sm"
-      label="Theme"
-      value={pref}
-      onChange={setPref}
-      options={[
-        { value: 'light', label: <Sun size={13} aria-label="Light" /> },
-        { value: 'dark', label: <Moon size={13} aria-label="Dark" /> },
-        { value: 'system', label: <Monitor size={13} aria-label="System" /> },
-      ]}
-    />
+    <button
+      onClick={() => setTheme(dark ? 'light' : 'dark')}
+      aria-label={label}
+      title={label}
+      className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg border border-line bg-surface text-ink-2 shadow-card transition-colors hover:border-line-strong hover:text-accent"
+    >
+      <span key={theme} className="theme-icon inline-flex">
+        {dark ? <Sun size={16} strokeWidth={1.9} /> : <Moon size={16} strokeWidth={1.9} />}
+      </span>
+    </button>
   )
 }
 
@@ -180,13 +181,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       <div className="flex-1 overflow-y-auto scroll-thin">
         <NavList onNavigate={onNavigate} />
       </div>
-      <div className="space-y-3">
-        <ServerStatus />
-        <div className="flex items-center justify-between px-1">
-          <span className="text-[12px] text-ink-3">Theme</span>
-          <ThemeSwitch />
-        </div>
-      </div>
+      <ServerStatus />
     </div>
   )
 }
@@ -272,6 +267,7 @@ export function Layout({ children }: { children?: ReactNode }) {
                 <LivePill />
               </div>
               <RangePicker />
+              <ThemeToggle />
             </div>
           </div>
         </header>
