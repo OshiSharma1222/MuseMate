@@ -20,12 +20,12 @@ export const PHOTOS = {
   nataraja: {
     src: '/images/nataraja.jpg',
     credit: 'Richard Mortel · CC BY 2.0',
-    focus: '50% 45%',
+    focus: '50% 38%',
   },
   natarajaFace: {
     src: '/images/nataraja-face.jpg',
     credit: 'Richard Mortel · CC BY 2.0',
-    focus: '50% 38%',
+    focus: '50% 66%',
   },
   instruments: {
     src: '/images/instruments.jpg',
