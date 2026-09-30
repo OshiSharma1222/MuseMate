@@ -16,15 +16,15 @@ Smart India Hackathon 2026 · PS SIH26214 · Heritage and Culture · Hardware ·
 
 ## What is in this repository
 
-MuseMate has three parts. This repository holds the third: the **curator dashboard**, where museum staff see what visitors did and asked, then fix what the guide says.
+MuseMate has three parts. This repository now holds two of them in full, plus the dashboard.
 
 | Part | What it does | Where |
 |---|---|---|
-| Handheld | ESP32-S3 with a PN532 NFC reader, I2S mic and speaker, push-to-talk button, microSD cache | not in this repo |
-| Museum edge server | FastAPI, SQLite artifact database, local LLM (Qwen on llama.cpp), Sarvam speech in and out, IndicTrans2 | not in this repo |
+| Handheld | ESP32-S3 with a PN532 NFC reader, I2S mic and speaker, push-to-talk button, microSD cache | not in this repo yet -- `POST /visitors/{id}/tap` on the edge server stands in for it today |
+| **Museum edge server** | FastAPI, SQLite artifact database, local LLM (Qwen 3.5:4b via Ollama), local STT (faster-whisper) and TTS (AI4Bharat Indic Parler-TTS + Piper), visitor sessions, REST + WebSocket API | [`backend/`](backend) (uses [`ml/`](ml) for inference) |
 | **Curator dashboard** | React + Vite web app on any laptop or tablet on the museum LAN | [`dashboard/`](dashboard) |
 
-The dashboard runs today on **seeded demo data**: 60 days of simulated visits to a 38-artifact museum. It keeps every page behind one data layer, so it can be pointed at the real server without touching the pages (see [Wiring up the server](#wiring-up-the-server)).
+The dashboard still runs on its own **seeded demo data** by default (60 days of simulated visits to a 38-artifact museum) -- wiring `dashboard/src/data/store.ts` to the real backend is the one remaining step (see [Wiring up the server](#wiring-up-the-server)); the backend's API already matches the shape that step expects, against a National Museum, New Delhi-style catalogue (see [`backend/app/data/artifacts.json`](backend/app/data/artifacts.json)).
 
 ## Why
 
@@ -195,6 +195,8 @@ erDiagram
 | `GET /artifacts`, `PATCH /artifacts/:id` | read and edit the catalogue |
 | WebSocket | pushes `start`, `tap`, `query` and `end` events for the live feed |
 
+These now exist in [`backend/`](backend); see [`backend/README.md`](backend/README.md) for the full endpoint list (visitor/mode/tap/query lifecycle included) and how to run it.
+
 ## Privacy
 
 Visitors are never people in this system. A visit is an anonymous ID tied to one handheld from pick-up to return: no names, no faces, no phone numbers, and no audio kept. The dashboard and server run on the museum's own network.
@@ -202,6 +204,18 @@ Visitors are never people in this system. A visit is an anonymous ID tied to one
 ## Layout
 
 ```
+backend/        FastAPI edge server -- see backend/README.md
+  app/
+    core/        visitor lifecycle, RAG/topic routing, directions BFS, live feed
+    db/          SQLAlchemy models, session factory, seeding
+    data/        museum.json, directions.json, artifacts.json (the dummy catalogue)
+    routers/     visitors, taps, query, artifacts, sessions, live (WS)
+  scripts/       console demo (mic/speaker), dataset (re)seeding
+ml/             local LLM/STT/TTS engines, no web framework -- see ml/README.md
+  llm/           Ollama client, prompts, RAG context, interest profiling
+  stt/           faster-whisper backend
+  tts/           Indic Parler-TTS + Piper backends, language router
+  audio/         mic capture (VAD-gated) and speaker playback
 dashboard/
   src/
     data/        catalogue, demo generator, store, selectors, exports, coverage rules

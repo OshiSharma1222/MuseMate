@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+# Downloaded model weights / voices -- large binaries, don't commit
+*.onnx
+*.onnx.json
+models/

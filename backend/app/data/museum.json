@@ -1,0 +1,35 @@
+{
+  "name": "National Museum",
+  "city": "New Delhi",
+  "address": "Janpath, New Delhi - 110011",
+  "opensAt": 10,
+  "closesAt": 18,
+  "closedDays": ["Monday"],
+  "entryFee": { "adults": 20, "foreignNationals": 500, "studentsUpTo12th": 0 },
+  "note": "Dummy demo dataset for the MuseMate SIH project. Real-world details (address, hours, gallery names, a subset of flagship artifacts and accession numbers) are drawn from the National Museum, New Delhi's public website to keep the guide's answers close to reality; most individual catalogue entries are illustrative stand-ins, not the museum's actual full catalogue.",
+  "galleries": [
+    { "id": "harappan", "name": "Harappan Civilization & Early Historic India", "floor": "Ground", "room": "G-1" },
+    { "id": "bronze", "name": "Bronze Gallery", "floor": "Ground", "room": "G-2" },
+    { "id": "sculpture", "name": "Sculpture Gallery", "floor": "Ground", "room": "G-3" },
+    { "id": "painting", "name": "Miniature Paintings", "floor": "First", "room": "F-1" },
+    { "id": "manuscript", "name": "Manuscripts", "floor": "First", "room": "F-2" },
+    { "id": "central_asian", "name": "Central Asian Antiquities", "floor": "First", "room": "F-3" },
+    { "id": "jewellery", "name": "Jewellery Gallery", "floor": "First", "room": "F-4" },
+    { "id": "arms", "name": "Arms & Armour", "floor": "Second", "room": "S-1" },
+    { "id": "coins", "name": "Numismatics & Epigraphy (Coins)", "floor": "Second", "room": "S-2" },
+    { "id": "decorative", "name": "Decorative Arts", "floor": "Second", "room": "S-3" },
+    { "id": "wood_music", "name": "Wood Carving & Musical Instruments", "floor": "Second", "room": "S-4" }
+  ],
+  "facilities": [
+    { "id": "entrance", "name": "Main Entrance", "floor": "Ground" },
+    { "id": "cloakroom", "name": "Cloakroom", "floor": "Ground" },
+    { "id": "museum_shop", "name": "Museum Shop", "floor": "Ground" },
+    { "id": "cafe", "name": "Café / Snack Bar", "floor": "Ground" },
+    { "id": "washroom_ground", "name": "Washrooms (Ground floor)", "floor": "Ground" },
+    { "id": "washroom_first", "name": "Washrooms (First floor)", "floor": "First" },
+    { "id": "washroom_second", "name": "Washrooms (Second floor)", "floor": "Second" },
+    { "id": "lift", "name": "Lift / Wheelchair access", "floor": "Ground" },
+    { "id": "exit", "name": "Exit Gate", "floor": "Ground" },
+    { "id": "auditorium", "name": "Auditorium", "floor": "Ground" }
+  ]
+}

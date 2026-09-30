@@ -1,0 +1,1077 @@
+{
+  "note": "Dummy/demo catalogue for MuseMate. Flagship entries (Dancing Girl, Pashupati Seal, Nataraja 56.2/1, Sword of Tipu Sultan 56.17/1, Battle Axe of Nadir Shah 58.47/3, Dagger 59.1/2, Toy Cart HR 13974/222, Animal-Faced Pregnant Female Vs 33/256) reflect real National Museum, New Delhi holdings and public descriptions. Remaining entries are plausible, period-accurate stand-ins written in the same style, not the museum's literal full catalogue. Some entries are deliberately left 'thin' (curatorNotes/history sparse) to realistically model catalogue gaps the dashboard's Pain Points page should surface.",
+  "artifacts": [
+    {
+      "id": "A001",
+      "accession": "NM 49.34/1",
+      "nfcTag": "13:81:4B:FB",
+      "name": "Dancing Girl",
+      "kind": "bronze",
+      "gallery": "harappan",
+      "period": "Harappan Civilization, c. 2500 BCE",
+      "region": "Mohenjo-daro (now in Sindh, Pakistan)",
+      "material": "Bronze, lost-wax cast",
+      "dimensions": "H 10.5 cm",
+      "description": "A nude standing female figure, one hand on her hip, the other arm covered almost entirely in bangles, with a necklace and her hair in a thick coiled braid. Cast in a single piece by the lost-wax method, it is among the earliest known bronze sculptures in the world and a rare glimpse of individual, informal posture from the Harappan world.",
+      "history": "Discovered during Ernest Mackay's 1926 excavation season at Mohenjo-daro. It has become one of the most reproduced images of the Indus Valley Civilization, often cited as evidence of skilled early metallurgy and a lively artistic tradition outside temples and palaces.",
+      "provenance": "Excavated under the Archaeological Survey of India before Partition; the Harappan holdings that came to Delhi were transferred to the newly founded National Museum in 1949.",
+      "ownership": "Government of India, Ministry of Culture, held in trust for the nation by the National Museum.",
+      "curatorNotes": "Visitors sometimes ask whether this is 'the' original Dancing Girl or a cast copy; there has been long-running public discussion in India and Pakistan about the division of Harappan finds after Partition. Answer factually: this figure is part of the National Museum's own Mohenjo-daro holdings, and avoid taking a side in the ownership debate beyond the documented facts.",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn",
+        "mr",
+        "te",
+        "kn",
+        "ml",
+        "gu",
+        "de",
+        "fr"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "provenance",
+          "en": "Is this the original Dancing Girl?"
+        },
+        {
+          "topic": "technique",
+          "en": "How was this bronze made?"
+        },
+        {
+          "topic": "meaning",
+          "en": "Why does she wear so many bangles?"
+        }
+      ],
+      "updatedAt": "2026-02-01T11:00:00"
+    },
+    {
+      "id": "A002",
+      "accession": "NM 31.11/2",
+      "nfcTag": "03:6C:5B:A7",
+      "name": "Pashupati Seal",
+      "kind": "seal",
+      "gallery": "harappan",
+      "period": "Harappan Civilization, c. 2350-2000 BCE",
+      "region": "Mohenjo-daro (now in Sindh, Pakistan)",
+      "material": "Steatite",
+      "dimensions": "3.5 x 3.4 cm",
+      "description": "A square stamp seal showing a seated, horned figure surrounded by an elephant, a tiger, a rhinoceros and a buffalo, with two deer or antelope beneath the seat. A line of undeciphered Indus script runs above the figure.",
+      "history": "Found during the 1928-29 excavation season at Mohenjo-daro. The excavator John Marshall proposed the figure was a prototype of the Hindu god Shiva in his form as Pashupati, 'Lord of Animals', which gave the seal its name; the identification remains debated among scholars and is not settled fact.",
+      "provenance": "Excavated by the Archaeological Survey of India; transferred to the National Museum on its founding in 1949.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "Present the Pashupati identification as one influential scholarly theory, not a proven fact -- the Indus script is still undeciphered, so we cannot confirm what the seal's owners believed.",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn",
+        "mr",
+        "te",
+        "kn",
+        "ml",
+        "gu",
+        "de",
+        "fr"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "meaning",
+          "en": "Is this really an early form of Shiva?"
+        },
+        {
+          "topic": "meaning",
+          "en": "Can anyone read the script on this seal?"
+        }
+      ],
+      "updatedAt": "2026-02-01T11:00:00"
+    },
+    {
+      "id": "A003",
+      "accession": "NM 52.9/4",
+      "nfcTag": "40:84:B8:1B",
+      "name": "Unicorn Seal",
+      "kind": "seal",
+      "gallery": "harappan",
+      "period": "Harappan Civilization, c. 2500-1900 BCE",
+      "region": "Mohenjo-daro (now in Sindh, Pakistan)",
+      "material": "Steatite",
+      "dimensions": "3.2 x 3.2 cm",
+      "description": "A square stamp seal showing a one-horned animal facing a ritual stand or 'incense burner', with a short line of Indus script above. Seals like this were likely pressed into wet clay to mark bundles of goods.",
+      "history": "The so-called 'unicorn' motif is the single most common animal on Harappan seals, more frequent even than the bull or elephant, though its exact meaning is unknown.",
+      "provenance": "Excavated by the Archaeological Survey of India; part of the founding Harappan collection transferred to the National Museum in 1949.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn",
+        "mr",
+        "te",
+        "kn",
+        "ml",
+        "gu"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "use",
+          "en": "Why did they need seals?"
+        },
+        {
+          "topic": "story",
+          "en": "Was the unicorn a real animal?"
+        }
+      ],
+      "updatedAt": "2026-02-01T11:00:00"
+    },
+    {
+      "id": "A004",
+      "accession": "HR 13974/222",
+      "nfcTag": "04:EE:D8:9F:C9:6F:BF",
+      "name": "Toy Cart",
+      "kind": "vessel",
+      "gallery": "harappan",
+      "period": "Harappan Civilization, c. 2500 BCE",
+      "region": "Harappa (now in Punjab, Pakistan)",
+      "material": "Terracotta",
+      "dimensions": "L 11 cm",
+      "description": "A small clay toy cart with two wheels on hubs, a bowl-shaped trolley with a rectangular frame, and holes for a now-missing wooden shaft. It is a miniature model of the ox-carts Harappan people used to move goods and passengers.",
+      "history": "Toy carts like this were common household finds at Harappan sites, indicating both a lively toy-making tradition and how ordinary transport of the period looked, since few full-size carts survive.",
+      "provenance": "Excavated at Harappa by the Archaeological Survey of India; catalogued into the National Museum's Pre-Historic Archaeology collection.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "use",
+          "en": "Was this a real toy or a model for something else?"
+        }
+      ],
+      "updatedAt": "2026-02-01T11:00:00"
+    },
+    {
+      "id": "A005",
+      "accession": "Vs 33/256",
+      "nfcTag": "04:E0:A3:8D:7E:61:18",
+      "name": "Animal-Faced Pregnant Female Figurine",
+      "kind": "sculpture",
+      "gallery": "harappan",
+      "period": "Harappan Civilization, c. 2700-2100 BCE",
+      "region": "Mohenjo-daro (now in Sindh, Pakistan)",
+      "material": "Terracotta",
+      "dimensions": "9.4 x 4 cm",
+      "description": "A small standing terracotta figure combining a woman's pregnant body with an elongated, muzzle-like animal face. The arms are mostly missing except small stumps at the shoulders, and there is a round cavity on the head, likely for an now-lost attachment.",
+      "history": "Composite human-animal terracotta figures are among the more unusual Harappan finds and are generally read as ritual or fertility-related objects, though their precise role in Harappan belief is not documented and remains speculative.",
+      "provenance": "Excavated at Mohenjo-daro; part of the founding Harappan collection at the National Museum.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "Content on this figurine's exact ritual use is thin -- flag repeated 'meaning' questions for curatorial follow-up.",
+      "verified": false,
+      "narrationLangs": [
+        "en",
+        "hi"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "meaning",
+          "en": "Why does this figure have an animal face?"
+        }
+      ],
+      "updatedAt": "2026-02-01T11:00:00"
+    },
+    {
+      "id": "A006",
+      "accession": "NM 68.7/12",
+      "nfcTag": "04:87:17:E7:6D:AC:06",
+      "name": "Painted Grey Ware Bowl",
+      "kind": "vessel",
+      "gallery": "harappan",
+      "period": "c. 1200-600 BCE",
+      "region": "Ganga-Yamuna plain",
+      "material": "Fired clay",
+      "dimensions": "D 14 cm",
+      "description": "A grey clay bowl with simple black painted bands near the rim.",
+      "history": "",
+      "provenance": "",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "Thin entry -- no curator write-up yet beyond the basic find data. Most visitor questions about who used it or its link to later epic-period sites go unanswered; needs a curator pass.",
+      "verified": false,
+      "narrationLangs": [
+        "en",
+        "hi"
+      ],
+      "commonQuestions": [],
+      "updatedAt": "2025-11-10T09:00:00"
+    },
+    {
+      "id": "A007",
+      "accession": "NM 47.14/1",
+      "nfcTag": "04:F2:7B:69:3B:EF:4C",
+      "name": "Nataraja",
+      "kind": "bronze",
+      "gallery": "bronze",
+      "period": "Chola, 12th century CE",
+      "region": "Tamil Nadu",
+      "material": "Bronze",
+      "dimensions": "H 96.0 cm, W 82.2 cm, D 28.2 cm",
+      "description": "Shiva as Nataraja, Lord of Dance, cast in bronze within a ring of flames, right leg on the dwarf-demon Muyalaka, front right hand raised in the gesture of protection (abhaya mudra). The dance embodies five cosmic acts of Shiva: creation, preservation, destruction, veiling and grace.",
+      "history": "Chola-period bronze casting, using the same lost-wax technique seen in the much older Harappan Dancing Girl, is widely considered the high point of Indian bronze art for its balance, fluidity and refined surface finish.",
+      "provenance": "Acquired by the National Museum as part of its South Indian bronze holdings; accession recorded as 56.2/1 in the museum's Bronze Gallery.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn",
+        "mr",
+        "te",
+        "kn",
+        "ml",
+        "gu",
+        "de",
+        "fr"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "meaning",
+          "en": "What does the dance of Nataraja represent?"
+        },
+        {
+          "topic": "technique",
+          "en": "How were these bronzes cast?"
+        }
+      ],
+      "updatedAt": "2026-01-20T10:00:00"
+    },
+    {
+      "id": "A008",
+      "accession": "NM 58.3/9",
+      "nfcTag": "04:A1:5A:90:69:0F:86",
+      "name": "Devi (Goddess)",
+      "kind": "bronze",
+      "gallery": "bronze",
+      "period": "Chola, 13th century CE",
+      "region": "Tamil Nadu",
+      "material": "Bronze",
+      "dimensions": "H 68 cm",
+      "description": "A standing bronze image of the goddess Devi, consort of Shiva, cast with the graceful tribhanga (three-bend) posture typical of later Chola bronzes, one hand lowered in a gesture of blessing.",
+      "history": "Consort images like this were usually cast and processed alongside the main deity's bronze during temple festivals, carried through the streets on palanquins so devotees who could not enter the temple sanctum could still receive the deity's presence (darshan).",
+      "provenance": "Part of the National Museum's Chola bronze holdings.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "mr"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "use",
+          "en": "Were these bronzes used in temple processions?"
+        }
+      ],
+      "updatedAt": "2026-01-20T10:00:00"
+    },
+    {
+      "id": "A009",
+      "accession": "NM 60.5/2",
+      "nfcTag": "04:07:87:38:AE:1D:B8",
+      "name": "Krishna Subduing the Serpent Kaliya",
+      "kind": "bronze",
+      "gallery": "bronze",
+      "period": "Chola, 12th century CE",
+      "region": "Tamil Nadu",
+      "material": "Bronze",
+      "dimensions": "H 52 cm",
+      "description": "Krishna shown dancing on the hood of the serpent Kaliya, one hand pulling up the serpent's tail, illustrating the story from the Bhagavata Purana in which the young Krishna drives a poisonous serpent out of the Yamuna river to protect the villagers of Vrindavan.",
+      "history": "This episode is one of the most popular Krishna stories rendered in Chola bronze, paired thematically with Nataraja as another cosmic dance -- one of destruction of evil, the other of universal rhythm.",
+      "provenance": "Part of the National Museum's Chola bronze holdings.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn",
+        "te"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "story",
+          "en": "What is the story behind this bronze?"
+        }
+      ],
+      "updatedAt": "2026-01-20T10:00:00"
+    },
+    {
+      "id": "A010",
+      "accession": "NM 55.8/3",
+      "nfcTag": "04:8F:71:E9:51:13:88",
+      "name": "Bodhisattva Maitreya",
+      "kind": "sculpture",
+      "gallery": "sculpture",
+      "period": "Kushan, 2nd-3rd century CE",
+      "region": "Gandhara (present-day Pakistan/Afghanistan border region)",
+      "material": "Grey schist",
+      "dimensions": "H 94 cm",
+      "description": "A standing bodhisattva in princely dress with a moustache, turban, and heavy jewellery, holding a water flask. The deep, naturalistic robe folds reflect the Hellenistic influence that reached Gandhara through contact with the Greek-founded kingdoms of the northwest.",
+      "history": "Maitreya is venerated in Buddhism as the future Buddha, yet to be born; Gandharan sculptors, working after Alexander's campaigns opened up contact with Greco-Roman art, gave Buddhist figures a distinctly Hellenistic look not seen in earlier Indian Buddhist art.",
+      "provenance": "Acquired for the National Museum's Gandhara sculpture holdings.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn",
+        "mr",
+        "te",
+        "kn",
+        "ml",
+        "gu",
+        "de",
+        "fr"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "origin",
+          "en": "Why does this Buddhist figure look Greek?"
+        },
+        {
+          "topic": "meaning",
+          "en": "What is a bodhisattva?"
+        }
+      ],
+      "updatedAt": "2026-01-15T10:00:00"
+    },
+    {
+      "id": "A011",
+      "accession": "NM 62.2/6",
+      "nfcTag": "04:D7:24:24:1D:74:E6",
+      "name": "Seated Buddha",
+      "kind": "sculpture",
+      "gallery": "sculpture",
+      "period": "Gupta, 5th century CE",
+      "region": "Mathura, Uttar Pradesh",
+      "material": "Red sandstone",
+      "dimensions": "H 70 cm",
+      "description": "The Buddha seated in meditation, in the earth-touching gesture, carved from the spotted red sandstone characteristic of Mathura workshops, with a plain, restrained halo behind the head typical of Gupta-period refinement.",
+      "history": "The Gupta period (4th-6th century CE) is often called the classical age of Indian sculpture, when the flamboyant detail of earlier Kushan art gave way to calmer, more idealised figures -- a style that became the template for Buddhist images across much of Asia.",
+      "provenance": "Acquired for the National Museum's Gupta sculpture holdings.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn",
+        "mr"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "meaning",
+          "en": "What does the earth-touching gesture mean?"
+        }
+      ],
+      "updatedAt": "2026-01-15T10:00:00"
+    },
+    {
+      "id": "A012",
+      "accession": "NM 64.9/1",
+      "nfcTag": "04:C9:AB:D0:AE:2D:8F",
+      "name": "Kubera, Yaksha of Wealth",
+      "kind": "sculpture",
+      "gallery": "sculpture",
+      "period": "Kushan, 2nd century CE",
+      "region": "Mathura, Uttar Pradesh",
+      "material": "Spotted red sandstone",
+      "dimensions": "H 61 cm",
+      "description": "A pot-bellied, heavily jewelled figure of Kubera, the guardian deity of wealth and treasure, seated in a relaxed royal pose associated with the earlier yaksha nature-spirit cults absorbed into later Hindu and Buddhist iconography.",
+      "history": "Yaksha figures like Kubera predate organised Hindu temple worship and show how folk nature-spirit cults were gradually folded into the mainstream pantheon as guardian or attendant deities.",
+      "provenance": "Acquired for the National Museum's Kushan-period sculpture holdings.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "mr",
+        "gu"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "meaning",
+          "en": "Who is Kubera?"
+        }
+      ],
+      "updatedAt": "2026-01-15T10:00:00"
+    },
+    {
+      "id": "A013",
+      "accession": "NM 71.4/2",
+      "nfcTag": "04:C5:E5:F9:2E:5E:05",
+      "name": "Radha and Krishna in the Boat of Love",
+      "kind": "painting",
+      "gallery": "painting",
+      "period": "Kangra school, c. 1790 CE",
+      "region": "Kangra, Himachal Pradesh",
+      "material": "Opaque watercolour and gold on paper",
+      "dimensions": "22 x 30 cm",
+      "description": "Radha and Krishna are shown seated together in a boat drifting on a lotus-filled river under a monsoon sky, a popular romantic theme of the Kangra school known for its lyrical, soft-toned depictions of divine love.",
+      "history": "The Kangra school flourished in the Himalayan foothills in the late 18th century, refining the bolder Basohli style into gentler colour and more naturalistic landscape, especially for Radha-Krishna themes drawn from the Bhagavata Purana and Gita Govinda.",
+      "provenance": "Acquired for the National Museum's Miniature Painting collection.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn",
+        "mr",
+        "gu"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "meaning",
+          "en": "What story does this painting show?"
+        },
+        {
+          "topic": "technique",
+          "en": "What are miniature paintings made with?"
+        }
+      ],
+      "updatedAt": "2026-01-25T10:00:00"
+    },
+    {
+      "id": "A014",
+      "accession": "NM 69.2/5",
+      "nfcTag": "04:A1:13:FD:97:1E:84",
+      "name": "Lakshmana Disfiguring Surpanakha",
+      "kind": "painting",
+      "gallery": "painting",
+      "period": "Mewar school, c. 1650 CE",
+      "region": "Mewar, Rajasthan",
+      "material": "Opaque watercolour on paper",
+      "dimensions": "24 x 34 cm",
+      "description": "A scene from the Ramayana in bold Mewar colours: the demoness Surpanakha, having taken a beautiful form to woo Rama, is disfigured by Lakshmana after her true intent is revealed, set against a flat red background typical of the school.",
+      "history": "Mewar painting workshops produced some of the earliest and most extensive illustrated Ramayana manuscripts in India during the 17th century, commissioned under the patronage of the rulers of Udaipur.",
+      "provenance": "Acquired for the National Museum's Miniature Painting collection.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "story",
+          "en": "What happens in this scene from the Ramayana?"
+        }
+      ],
+      "updatedAt": "2026-01-25T10:00:00"
+    },
+    {
+      "id": "A015",
+      "accession": "NM 73.6/1",
+      "nfcTag": "04:DC:B1:30:1F:EF:3B",
+      "name": "Nauras Ragmala Painting",
+      "kind": "painting",
+      "gallery": "painting",
+      "period": "Deccan (Bijapur), c. 1600-1650 CE",
+      "region": "Bijapur, Deccan",
+      "material": "Opaque watercolour and gold on paper",
+      "dimensions": "20 x 28 cm",
+      "description": "A page from a Ragmala ('garland of musical modes') series, personifying a particular raga as a courtly figure, painted in the richly ornamented, Persian-influenced style associated with the Deccan sultanate of Bijapur under Ibrahim Adil Shah II, himself a noted patron of music and the arts.",
+      "history": "Ragmala painting translates the emotional character of a musical raga into a visual scene -- a season, a mood, a pair of lovers -- so a viewer unfamiliar with the music could still sense what it evoked; Bijapur's Nauras ('nine essences') school is especially prized for blending Persian, Deccani and Indian painting traditions.",
+      "provenance": "Acquired for the National Museum's Miniature Painting collection.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "te",
+        "kn"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "meaning",
+          "en": "What is a Ragmala painting?"
+        }
+      ],
+      "updatedAt": "2026-01-25T10:00:00"
+    },
+    {
+      "id": "A016",
+      "accession": "NM 77.1/3",
+      "nfcTag": "04:E9:B6:2F:5F:30:E5",
+      "name": "Illustrated Bhagavata Purana Folio",
+      "kind": "manuscript",
+      "gallery": "manuscript",
+      "period": "Pahari school, c. 1780 CE",
+      "region": "Himachal Pradesh hills",
+      "material": "Opaque watercolour on paper, bound leaf",
+      "dimensions": "26 x 36 cm",
+      "description": "A single illustrated page from a Bhagavata Purana manuscript, combining a painted scene of Krishna's childhood with lines of Devanagari text below, the format typical of illustrated Hindu religious manuscripts commissioned by hill-state courts.",
+      "history": "Illustrated Puranic manuscripts served both devotional and educational purposes in royal households, letting readers follow the text and picture the events of Krishna's life side by side.",
+      "provenance": "Acquired for the National Museum's Manuscripts collection.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "mr"
+      ],
+      "commonQuestions": [],
+      "updatedAt": "2026-01-18T10:00:00"
+    },
+    {
+      "id": "A017",
+      "accession": "NM 80.3/2",
+      "nfcTag": "04:D2:7B:FE:BB:47:A9",
+      "name": "Illuminated Quran Manuscript",
+      "kind": "manuscript",
+      "gallery": "manuscript",
+      "period": "Mughal, 17th century CE",
+      "region": "North India",
+      "material": "Ink, gold and pigment on paper",
+      "dimensions": "30 x 20 cm (bound)",
+      "description": "A Mughal-period Quran manuscript in fine naskh calligraphy, its opening pages illuminated with gold floral borders and geometric frames typical of Mughal court ateliers.",
+      "history": "Mughal emperors patronised workshops that produced richly illuminated religious manuscripts in multiple traditions, and this Quran reflects the same standard of gold-leaf illumination seen in imperial Persian and Mughal secular manuscripts of the period.",
+      "provenance": "Acquired for the National Museum's Manuscripts collection; exhibited in the museum's 'The Holy Quran' exhibition.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "technique",
+          "en": "How was the calligraphy and gold work done?"
+        }
+      ],
+      "updatedAt": "2026-01-18T10:00:00"
+    },
+    {
+      "id": "A018",
+      "accession": "NM 08.221/4",
+      "nfcTag": "04:3B:4D:CF:C5:CE:4F",
+      "name": "Wall Painting Fragment from Miran",
+      "kind": "painting",
+      "gallery": "central_asian",
+      "period": "c. 3rd-4th century CE",
+      "region": "Miran, Xinjiang (Silk Route, Central Asia)",
+      "material": "Pigment on stucco",
+      "dimensions": "40 x 55 cm",
+      "description": "A fragment of a Buddhist wall painting showing part of a donor figure's face and shoulder, in a style blending Gandharan and Central Asian painting conventions found along the Silk Route oasis towns.",
+      "history": "This piece belongs to the material brought back by the Hungarian-British archaeologist Sir Aurel Stein from his Central Asian expeditions of 1900-1901, 1906-1908 and 1913-1916, which recovered wall paintings, painted silk banners, sculpture, coins and manuscripts documenting the multi-cultural Buddhist world of the Silk Route.",
+      "provenance": "Collected by Sir Aurel Stein during his Central Asian expeditions; transferred to the National Museum's Central Asian Antiquities collection, which holds around 600 objects from the Stein expeditions.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "de",
+        "fr"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "origin",
+          "en": "How did Central Asian art end up in a Delhi museum?"
+        }
+      ],
+      "updatedAt": "2026-01-12T10:00:00"
+    },
+    {
+      "id": "A019",
+      "accession": "NM 08.221/19",
+      "nfcTag": "04:28:1F:E3:86:E3:C3",
+      "name": "Painted Silk Banner Fragment",
+      "kind": "textile",
+      "gallery": "central_asian",
+      "period": "Tang era, c. 7th-9th century CE",
+      "region": "Dandan-Oilik, Xinjiang (Silk Route, Central Asia)",
+      "material": "Painted silk",
+      "dimensions": "35 x 90 cm",
+      "region_note": "",
+      "description": "A fragment of a painted silk banner depicting part of a Buddhist deity, once hung in a shrine along the Silk Route; the surviving pigment shows the fine brushwork and mineral colours typical of Tang-era Buddhist textile painting.",
+      "history": "Painted silk banners like this were used as temple offerings and processional hangings in Buddhist shrines across Central Asia, and their survival owes largely to the extremely dry desert climate of the Tarim Basin oasis sites.",
+      "provenance": "Collected by Sir Aurel Stein during his Central Asian expeditions; part of the National Museum's Central Asian Antiquities collection.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "de",
+        "fr"
+      ],
+      "commonQuestions": [],
+      "updatedAt": "2026-01-12T10:00:00"
+    },
+    {
+      "id": "A020",
+      "accession": "NM 85.4/7",
+      "nfcTag": "04:7E:D8:55:B9:54:86",
+      "name": "Tibetan Prayer Wheel",
+      "kind": "instrument",
+      "gallery": "central_asian",
+      "period": "19th-20th century CE",
+      "region": "Tibet / Himalayan region",
+      "material": "Metal, shell and wood",
+      "dimensions": "H 22 cm",
+      "description": "A hand-held prayer wheel of composite metal, shell and wood, decorated with auspicious Buddhist symbols. Inside is a tightly wound paper scroll printed many times over with the mantra 'Om mani padme hum'.",
+      "history": "Spinning the wheel is believed by practitioners to release the effect of the enclosed mantra into the world with the same merit as reciting it aloud, once for every full rotation.",
+      "provenance": "Acquired for the National Museum's Central Asian / Himalayan Buddhist material.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "bn"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "use",
+          "en": "What does spinning the prayer wheel do?"
+        }
+      ],
+      "updatedAt": "2026-01-12T10:00:00"
+    },
+    {
+      "id": "A021",
+      "accession": "NM 91.2/1",
+      "nfcTag": "04:A8:40:1B:A2:57:2D",
+      "name": "Tiara of the Nizam's Collection",
+      "kind": "jewellery",
+      "gallery": "jewellery",
+      "period": "Early 20th century CE",
+      "region": "Hyderabad, Deccan",
+      "material": "Gold, diamonds and enamel",
+      "dimensions": "H 6 cm, W 18 cm",
+      "description": "A five-panelled gold tiara, the centre of each panel set with a small figure of the Buddha worked in gold, combining European tiara construction with South Asian Buddhist iconography.",
+      "history": "Jewellery from the erstwhile Hyderabad state, associated with the Nizams, entered public museum collections after India's independence and the integration of princely states; a selection was shown in the National Museum's 2019 exhibition 'Jewellery of the Nizam'.",
+      "provenance": "Part of the jewellery collection associated with the former princely state of Hyderabad, later acquired for the National Museum.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "te",
+        "kn"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "provenance",
+          "en": "How did royal jewellery end up in a national museum?"
+        }
+      ],
+      "updatedAt": "2026-01-22T10:00:00"
+    },
+    {
+      "id": "A022",
+      "accession": "NM 91.2/8",
+      "nfcTag": "04:10:79:36:04:D4:E4",
+      "name": "Emerald and Gold Necklace",
+      "kind": "jewellery",
+      "gallery": "jewellery",
+      "period": "Early 20th century CE",
+      "region": "Hyderabad, Deccan",
+      "material": "Gold, emeralds and pearls",
+      "dimensions": "L 32 cm",
+      "description": "A layered gold necklace set with cabochon-cut emeralds and seed pearls, in the ornate style favoured by the Hyderabad court in the early 20th century.",
+      "history": "",
+      "provenance": "Part of the jewellery collection associated with the former princely state of Hyderabad, later acquired for the National Museum.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "Thin entry; needs a fuller curatorial write-up on manufacture and specific court context.",
+      "verified": false,
+      "narrationLangs": [
+        "en",
+        "hi"
+      ],
+      "commonQuestions": [],
+      "updatedAt": "2025-12-02T10:00:00"
+    },
+    {
+      "id": "A023",
+      "accession": "56.17/1",
+      "nfcTag": "04:73:56:B0:57:73:55",
+      "name": "Sword of Tipu Sultan",
+      "kind": "arms",
+      "gallery": "arms",
+      "period": "Mysore, 1799 CE",
+      "region": "Srirangapatna, Mysore",
+      "material": "Metal, wood and velvet",
+      "dimensions": "L 74.1 cm",
+      "description": "The personal sword of Tipu Sultan, ruler of Mysore, with a Delhishahi hilt -- a circular disc pommel, oval grip, small knuckle-guard, and short quillons -- fully damascened in gold with floral and creeper patterns. The blade carries Quranic verses in gold along with Tipu Sultan's name and his capital, Srirangapatna. The wooden sheath is covered in maroon velvet.",
+      "history": "Tipu Sultan, known as the 'Tiger of Mysore', died defending Srirangapatna against the British East India Company in 1799; his weapons and regalia were dispersed after the fall of the fort and several later entered Indian and British museum and private collections.",
+      "provenance": "Accessioned into the National Museum's Arms & Armour collection as 56.17/1.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn",
+        "mr",
+        "te",
+        "kn",
+        "ml",
+        "gu",
+        "de",
+        "fr"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "story",
+          "en": "Who was Tipu Sultan?"
+        },
+        {
+          "topic": "technique",
+          "en": "How was the gold decoration on the blade done?"
+        }
+      ],
+      "updatedAt": "2026-01-08T10:00:00"
+    },
+    {
+      "id": "A024",
+      "accession": "58.47/3",
+      "nfcTag": "04:6E:E9:53:6C:4D:77",
+      "name": "Battle Axe of Nadir Shah",
+      "kind": "arms",
+      "gallery": "arms",
+      "period": "Indo-Persian, 1739 CE",
+      "region": "Persia / North India",
+      "material": "Metal",
+      "dimensions": "L 52 cm",
+      "description": "A battle-axe inscribed with Quranic verses and the phrase 'Sahib-e-Qiran Nadir' in Arabic. The axe head is richly decorated with gold and silver inscriptions, and the octagonal handle is covered in gold and silver floral work.",
+      "history": "Nadir Shah of Persia invaded North India and sacked Delhi in 1739, carrying off enormous wealth including the Peacock Throne and the Koh-i-Noor diamond; this axe is associated with that campaign.",
+      "provenance": "Accessioned into the National Museum's Arms & Armour collection as 58.47/3.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "bn",
+        "mr",
+        "fr"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "story",
+          "en": "Who was Nadir Shah?"
+        }
+      ],
+      "updatedAt": "2026-01-08T10:00:00"
+    },
+    {
+      "id": "A025",
+      "accession": "59.1/2",
+      "nfcTag": "04:F8:63:B5:7C:2D:A5",
+      "name": "Dagger from Udaipur",
+      "kind": "arms",
+      "gallery": "arms",
+      "period": "Udaipur, 17th century CE",
+      "region": "Udaipur, Rajasthan",
+      "material": "Leather and metal",
+      "dimensions": "L 40.1 cm",
+      "description": "A moderately curved dagger with a plain blade and a ram-shaped hilt studded with lustrous precious stones, sheathed in decorated leather -- typical of the fine courtly weaponry produced in Rajput Udaipur.",
+      "history": "Rajput courts maintained dedicated royal workshops for ceremonial and functional weapons, where animal-headed hilts such as this ram form were a recurring decorative motif.",
+      "provenance": "Accessioned into the National Museum's Arms & Armour collection as 59.1/2.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "mr",
+        "gu"
+      ],
+      "commonQuestions": [],
+      "updatedAt": "2026-01-08T10:00:00"
+    },
+    {
+      "id": "A026",
+      "accession": "NM 63.5/9",
+      "nfcTag": "04:D1:3B:3A:97:56:70",
+      "name": "Ceremonial Shield",
+      "kind": "arms",
+      "gallery": "arms",
+      "period": "Mughal, 17th-18th century CE",
+      "region": "North India",
+      "material": "Hide and steel",
+      "dimensions": "D 46 cm",
+      "description": "A round hide shield (dhal) with four raised steel bosses and simple floral border painting.",
+      "history": "",
+      "provenance": "",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "Thin entry; construction technique and specific workshop attribution not yet researched.",
+      "verified": false,
+      "narrationLangs": [
+        "en",
+        "hi"
+      ],
+      "commonQuestions": [],
+      "updatedAt": "2025-11-28T10:00:00"
+    },
+    {
+      "id": "A027",
+      "accession": "NM 20.6/3",
+      "nfcTag": "04:92:C8:A6:F9:ED:B9",
+      "name": "Punch-Marked Silver Karshapana",
+      "kind": "coin",
+      "gallery": "coins",
+      "period": "Mauryan, c. 3rd century BCE",
+      "region": "Magadha (present-day Bihar)",
+      "material": "Silver",
+      "dimensions": "D 1.8 cm",
+      "description": "An irregularly shaped silver coin stamped with several small punched symbols -- a sun, a six-armed motif, and others -- rather than a single unified design, typical of the earliest Indian coinage.",
+      "history": "Punch-marked coins are among the earliest coins issued anywhere in the Indian subcontinent, predating uniform royal portraits and inscriptions; each punch mark may represent a different guarantor or minting authority rather than a single ruler.",
+      "provenance": "Part of the National Museum's Numismatics collection, which covers Indian coinage from the 6th century BCE to the 21st century CE.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "bn",
+        "mr"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "technique",
+          "en": "How were these coins made?"
+        }
+      ],
+      "updatedAt": "2026-01-05T10:00:00"
+    },
+    {
+      "id": "A028",
+      "accession": "NM 34.2/17",
+      "nfcTag": "04:4A:BD:55:08:71:1D",
+      "name": "Kushana Gold Dinara",
+      "kind": "coin",
+      "gallery": "coins",
+      "period": "Kushana, 2nd century CE (reign of Kanishka)",
+      "region": "Northern India / Central Asia",
+      "material": "Gold",
+      "dimensions": "D 2 cm",
+      "description": "A gold coin of the Kushana emperor Kanishka, showing the king standing at a fire altar on the obverse and a deity on the reverse, in a style adapted from contemporary Roman and Persian coinage.",
+      "history": "The Kushana empire controlled trade along the Silk Route, and its coinage borrowed imagery from Greek, Roman, Persian and Indian deities alike, reflecting the empire's role as a crossroads of cultures.",
+      "provenance": "Part of the National Museum's Numismatics collection.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "gu"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "origin",
+          "en": "Why does this coin look Roman?"
+        }
+      ],
+      "updatedAt": "2026-01-05T10:00:00"
+    },
+    {
+      "id": "A029",
+      "accession": "NM 05.9/44",
+      "nfcTag": "04:5D:E7:44:F4:49:55",
+      "name": "British India Silver Rupee",
+      "kind": "coin",
+      "gallery": "coins",
+      "period": "19th century CE",
+      "region": "British India",
+      "material": "Silver",
+      "dimensions": "D 3 cm",
+      "description": "A silver one-rupee coin bearing the profile of the reigning British monarch on the obverse and a value inscription in English, Persian and Devanagari on the reverse.",
+      "history": "Coinage under the East India Company and later the British Crown standardised weight and design across the subcontinent, a major shift from the many regional currencies that preceded it.",
+      "provenance": "Part of the National Museum's Numismatics collection.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en"
+      ],
+      "commonQuestions": [],
+      "updatedAt": "2026-01-05T10:00:00"
+    },
+    {
+      "id": "A030",
+      "accession": "NM 88.7/2",
+      "nfcTag": "04:9E:04:08:76:37:5E",
+      "name": "Kashkul (Mendicant's Bowl)",
+      "kind": "decorative",
+      "gallery": "decorative",
+      "period": "18th-19th century CE",
+      "region": "Persia / Mughal India",
+      "material": "Coconut shell, metal fittings",
+      "dimensions": "L 24 cm",
+      "description": "An oblong begging bowl carved from a coconut shell, decorated with floral designs and inscribed in Arabic in the naskh script with the name of Allah.",
+      "history": "The kashkul was carried by wandering Sufi ascetics (dervishes) as both a practical begging bowl and a symbol of renouncing material wealth.",
+      "provenance": "Acquired for the National Museum's Decorative Arts collection.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ml"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "use",
+          "en": "Who used a kashkul and why?"
+        }
+      ],
+      "updatedAt": "2026-01-10T10:00:00"
+    },
+    {
+      "id": "A031",
+      "accession": "NM 89.1/6",
+      "nfcTag": "04:EE:9E:23:BD:F7:A7",
+      "name": "Painted Hand Fan",
+      "kind": "decorative",
+      "gallery": "decorative",
+      "period": "18th-19th century CE",
+      "region": "Deccan / North India",
+      "material": "Wood, cloth and pigment",
+      "dimensions": "L 45 cm (open)",
+      "description": "A large hand fan on a wooden frame, painted all over with floral designs, of the kind used by attendants to cool a seated noble in a Mughal or Deccan court.",
+      "history": "",
+      "provenance": "",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "Thin entry; exact court or workshop attribution not yet researched.",
+      "verified": false,
+      "narrationLangs": [
+        "en",
+        "hi"
+      ],
+      "commonQuestions": [],
+      "updatedAt": "2025-12-15T10:00:00"
+    },
+    {
+      "id": "A032",
+      "accession": "NM 90.4/3",
+      "nfcTag": "04:F5:84:B3:8C:10:30",
+      "name": "Horse-Shaped Nut-Cutter",
+      "kind": "decorative",
+      "gallery": "decorative",
+      "region": "South India",
+      "period": "18th-19th century CE",
+      "material": "Bidri metalware (zinc alloy with silver inlay)",
+      "dimensions": "L 20 cm",
+      "description": "A scissor-action nut-cutter (areca-nut cutter) cast in the shape of a galloping horse with a rider, the blades hidden in the horse's mouth, a common decorative form for this everyday betel-nut tool across South India.",
+      "history": "Areca-nut cutters shaped as animals or mythical figures were a popular decorative object across South and Southeast Asia, combining a practical function -- cutting hard betel nuts for chewing -- with playful, often symbolic, sculptural form.",
+      "provenance": "Acquired for the National Museum's Decorative Arts collection.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "ta",
+        "te",
+        "kn"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "use",
+          "en": "What was this tool used for?"
+        }
+      ],
+      "updatedAt": "2026-01-10T10:00:00"
+    },
+    {
+      "id": "A033",
+      "accession": "NM 66.3/1",
+      "nfcTag": "04:A5:FB:5A:4F:02:9A",
+      "name": "Rudra Veena",
+      "kind": "instrument",
+      "gallery": "wood_music",
+      "period": "19th century CE",
+      "region": "North India",
+      "material": "Wood, gourd resonators and metal strings",
+      "dimensions": "L 130 cm",
+      "description": "A large stick zither with two gourd resonators, used in the Dhrupad tradition of North Indian classical music, one of the oldest surviving Indian instrument forms still in use.",
+      "history": "The rudra veena was long favoured by Dhrupad singers for its deep, sustained resonance suited to the tradition's slow, meditative style, though it has become a rare instrument today as fewer musicians train on it.",
+      "provenance": "Acquired for the National Museum's Musical Instruments collection.",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "",
+      "verified": true,
+      "narrationLangs": [
+        "hi",
+        "en",
+        "mr",
+        "bn"
+      ],
+      "commonQuestions": [
+        {
+          "topic": "use",
+          "en": "What kind of music was this played for?"
+        }
+      ],
+      "updatedAt": "2026-01-14T10:00:00"
+    },
+    {
+      "id": "A034",
+      "accession": "NM 71.9/5",
+      "nfcTag": "04:09:34:46:01:5B:7B",
+      "name": "Sarangi",
+      "kind": "instrument",
+      "gallery": "wood_music",
+      "period": "19th-20th century CE",
+      "region": "North India",
+      "material": "Wood and gut strings",
+      "dimensions": "L 66 cm",
+      "description": "A short-necked bowed instrument with sympathetic strings, carved from a single block of wood, closely associated with vocal accompaniment in Hindustani classical and folk music.",
+      "history": "",
+      "provenance": "",
+      "ownership": "Government of India, Ministry of Culture.",
+      "curatorNotes": "Thin entry; needs curator notes on maker/workshop and playing technique.",
+      "verified": false,
+      "narrationLangs": [
+        "en",
+        "hi"
+      ],
+      "commonQuestions": [],
+      "updatedAt": "2025-12-20T10:00:00"
+    }
+  ]
+}
